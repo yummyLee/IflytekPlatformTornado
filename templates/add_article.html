@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>添加工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="{{static_url('external/google-code-prettify/prettify.css')}}" rel="stylesheet">
+    <link href="{{static_url('css/bootstrap-combined.no-icons.min.css')}}" rel="stylesheet">
+    <link href="{{static_url('css/bootstrap-responsive.min.css')}}" rel="stylesheet">
+    <link href="{{static_url('css/font-awesome.css')}}" rel="stylesheet">
+    <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
+    <script src="{{static_url('external/jquery.hotkeys.js')}}"></script>
+    <script src="{{static_url('js/bootstrap.min.js')}}"></script>
+    <script src="{{static_url('external/google-code-prettify/prettify.js')}}"></script>
+    <link href="{{static_url('css/index.css')}}" rel="stylesheet">
+    <script src="{{static_url('js/bootstrap-wysiwyg.js')}}"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
+</head>
+
+<body id="writeArticlePage" class="home-bar">
+<div class="container-fluid home-bar">
+    <a href="index.html" class="btn-info"><span type="button"
+                                                class="glyphicon glyphicon-home pull-left home-logo"></span></a>
+</div>
+
+<div class="container-fluid thumbnail write-article">
+
+    <div class="write-article-header">
+        <h1>添加工具 <br/>
+            <small>为你的工具添加说明</small>
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="articleTitle">标题:</label>
+                <input type="text" class="form-control article-info-input" id="articleTitle">
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="articleWriter">作者:</label>
+                <input type="text" class="form-control article-info-input" id="articleWriter">
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <label for="articleClass">文章分类:</label><br>
+            <div class="btn-group" id="articleClass">
+                <button id="curArticleClass" type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown">默认</button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a>语言模型</a>
+                    </li>
+                    <li>
+                        <a>声学模型</a>
+                    </li>
+                    <li>
+                        <a>业务相关</a>
+                    </li>
+                    <li>
+                        <a>其他</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="alerts"></div>
+    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+        <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b
+                    class="caret"></b></a>
+            <ul class="dropdown-menu">
+            </ul>
+        </div>
+        <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b
+                    class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a data-edit="fontSize 5">
+                        <font size="5">Huge</font>
+                    </a>
+                </li>
+                <li>
+                    <a data-edit="fontSize 3">
+                        <font size="3">Normal</font>
+                    </a>
+                </li>
+                <li>
+                    <a data-edit="fontSize 1">
+                        <font size="1">Small</font>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+            <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+            <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+            <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+        </div>
+        <div class="btn-group">
+            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+            <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-outdent"></i></a>
+            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indet"></i></a>
+        </div>
+        <div class="btn-group">
+            <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+            <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+            <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i
+                    class="fa fa-align-right"></i></a>
+            <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+        </div>
+        <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+            <div class="dropdown-menu input-append">
+                <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+                <button class="btn" type="button">Add</button>
+            </div>
+            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
+
+        </div>
+
+        <div class="btn-group">
+            <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i
+                    class="fa fa-file-picture-o"></i></a>
+            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage"/>
+        </div>
+        <div class="btn-group">
+            <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
+            <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+        </div>
+        <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+
+        <button id="submitArticleButton" class="btn btn-success pull-right">提交</button>
+    </div>
+
+    <div id="editor">
+        开始描述&hellip;
+    </div>
+
+    <footer class="container-fluid main-container-fluid text-center">
+        <div class="row">
+            <a href="#writeArticlePage" class="col-lg-12" title="To Top">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-2">
+                <a href="#" title="查看隐私政策">隐私政策</a>
+            </div>
+            <div class="col-sm-2">
+                <a href="#" title="查看平台信息">平台信息</a>
+            </div>
+            <div class="col-sm-2">
+                <a href="#" title="查看免责声明">免责声明</a>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <br>
+        <p>Presented by
+            <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
+        </p>
+    </footer>
+</div>
+
+<script>
+    $("#articleClass").children().children().children().click(function () {
+        var articleClassName = this.innerHTML;
+        console.log(articleClassName);
+        $("#curArticleClass").html(articleClassName);
+    })
+</script>
+
+<script>
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+            " " + date.getHours() + seperator2 + date.getMinutes() +
+            seperator2 + date.getSeconds();
+        return currentdate;
+    }
+
+    $(document).ready(function () {
+        $("#submitArticleButton").click(function () {
+            var articleContent = $("#editor").wysiwyg();
+            var articleTitle = $("#articleTitle").val();
+            var articleWriter = $("#articleWriter").val();
+            var articleClass = $("#curArticleClass").val();
+            var articleDate = getNowFormatDate();
+            $.ajax({
+                url: "http://localhost:8000/add_article.html",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'articleTitle': articleTitle,
+                    'articleWriter': articleWriter,
+                    'articleClass': articleClass,
+                    'articleDate': articleDate,
+                    'articleContent': articleContent
+                }),
+                dataType: "text",
+                success: function (result) {
+                    if (result == "success") {
+                        obj.parents('form').submit();
+                    } else {
+                    }
+                },
+                error: function (msg) {
+                    $(".notice").html('Error:' + msg);
+                }
+            })
+            return false;
+        })
+    });
+</script>
+
+<script>
+    $(function () {
+        function initToolbarBootstrapBindings() {
+            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                    'Times New Roman', 'Verdana'
+                ],
+                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            $.each(fonts, function (idx, fontName) {
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+            });
+            $('a[title]').tooltip({
+                container: 'body'
+            });
+            $('.dropdown-menu input').click(function () {
+                return false;
+            })
+                .change(function () {
+                    $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+                })
+                .keydown('esc', function () {
+                    this.value = '';
+                    $(this).change();
+                });
+
+            $('[data-role=magic-overlay]').each(function () {
+                var overlay = $(this),
+                    target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+            if ("onwebkitspeechchange" in document.createElement("input")) {
+                var editorOffset = $('#editor').offset();
+                $('#voiceBtn').css('position', 'absolute').offset({
+                    top: editorOffset.top,
+                    left: editorOffset.left + $('#editor').innerWidth() - 35
+                });
+            } else {
+                $('#voiceBtn').hide();
+            }
+        };
+
+        function showErrorAlert(reason, detail) {
+            var msg = '';
+            if (reason === 'unsupported-file-type') {
+                msg = "Unsupported format " + detail;
+            } else {
+                console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        };
+        initToolbarBootstrapBindings();
+        $('#editor').wysiwyg({
+            fileUploadError: showErrorAlert
+        });
+        window.prettyPrint && prettyPrint();
+    });
+</script>
+
+</body>
+
+</html>

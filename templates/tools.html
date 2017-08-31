@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>常用工具</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{static_url('css/main.css')}}" />
+		<script src="https://ajax.googleapis.bootcss.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	</head>
+
+	<body>
+		<div class="container-fluid home-bar">
+			<a href="index.html" class="btn-info"><span type="button" class="glyphicon glyphicon-home pull-left home-logo"></span></a>
+			<a href="add_article.html" class="btn-info"><span type="button" class="glyphicon glyphicon-pencil pull-right home-logo"></span></a>
+		</div>
+		<div class="jumbotron jumbotron-small text-center">
+			<h1>常用工具</h1>
+			<form class="form-inline">
+				<input type="search" class="form-control" size="50" placeholder="需要搜索的内容…">
+				<button type="button" class="btn btn-info">搜索</button>
+			</form>
+		</div>
+
+		<div class="container-fluid">
+			<div id="row">
+				<div class="col-lg-9">
+					<div id="tool-class-list" class="list-group">
+						<!--<a href="#" class="list-group-item">
+							<label class="label label-info">语言</label>
+							<span>句法解析工具</span>
+						</a>
+						<a href="#" class="list-group-item">
+							<label class="label label-info">语言</label>
+							<span>bnf相关工具</span>
+						</a>
+						<a href="#" class="list-group-item">
+							<label class="label label-info">声学</label>
+							<span>升采样工具</span>
+						</a>-->
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="panel panel-info">
+						<div class="panel-heading">工具分类</div>
+						<div class="list-group">
+							<a href="#" class="list-group-item">
+								<label class="label label-info">语言</label><span>语言模型相关</span><span class="badge">12</span>
+							</a>
+							<a href="#" class="list-group-item">
+								<label class="label label-info">声学</label><span>声学模型相关</span><span class="badge">8</span>
+							</a>
+							<a href="#" class="list-group-item">
+								<label class="label label-info">其他</label><span>其他工具</span><span class="badge">3</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>
+				for(i = 0; i < 20; i++) {
+					var classPanel = document.getElementById("tool-class-list");
+					var listItem = document.createElement("a");
+					var itemLabel = document.createElement("label");
+					var itemName = document.createElement("span");
+
+					listItem.href = "article.html";
+					listItem.className = "list-group-item";
+					itemLabel.className = "label label-info";
+					itemLabel.innerHTML = "标签";
+					itemName.innerHTML = "句法解析工具";
+					listItem.append(itemLabel);
+					listItem.append(itemName);
+					classPanel.append(listItem);
+				}
+			</script>
+
+		</div>
+	</body>
+
+</html>

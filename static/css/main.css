@@ -1,0 +1,156 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.clearfix {
+	overflow: auto;
+	_height: 1%
+}
+
+a,
+a:hover {
+	text-decoration: none;
+}
+
+.container-fluid {
+	padding: 20px;
+}
+
+.jumbotron {
+	background-color: deepskyblue;
+	color: white;
+	padding: 100px 25px;
+}
+
+.jumbotron-small {
+	background-color: deepskyblue;
+	color: white;
+	padding: 50px 25px;
+}
+
+.navbar-main {
+	margin-bottom: 0;
+	background-color: deepskyblue;
+	z-index: 9999;
+	border: 0;
+	font-size: 12px !important;
+	line-height: 1.42857143 !important;
+	letter-spacing: 4px;
+	border-radius: 0;
+}
+
+.navbar-toggle {
+	border-color: transparent !important;
+}
+
+.navbar-toggle:focus,
+.navbar-toggle:hover {
+	background-color: lightskyblue !important;
+}
+
+.icon-bar {
+	background-color: white !important;
+}
+
+.navbar li a,
+.navbar .navbar-brand {
+	color: white !important;
+}
+
+.navbar-nav li a:hover,
+.navbar-nav li.active a {
+	color: deepskyblue !important;
+	background-color: white !important;
+}
+
+.bg-grey {
+	background-color: #f6f6f6;
+}
+
+.main-container-fluid {
+	padding: 30px 50px 30px 50px;
+}
+
+.logo {
+	color: deepskyblue;
+	font-size: 160px;
+}
+
+.logo-small {
+	color: deepskyblue;
+	font-size: 30px;
+}
+
+.main-row {
+	margin-bottom: 20px;
+}
+
+.a-black {
+	color: black;
+}
+
+.normal-font {
+	font-size: 12px
+}
+
+.fill-parent {
+	width: 100%;
+}
+
+.home-logo {
+	color: white;
+	font-size: 20px;
+}
+
+.home-bar {
+	padding: 10px;
+	background-color: deepskyblue;
+}
+
+.article-page-bg {
+	background-color: deepskyblue;
+	padding: 50px 120px 50px 120px;
+}
+
+.article-page-main {
+	padding: 30px 50px 10px 50px;
+}
+
+.article-nav {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	/*padding-top: 10px;
+	padding-bottom: 10px;*/
+	border-top: lightblue solid 1px;
+	border-bottom: lightblue solid 1px;
+}
+
+.article-nav li a {
+	color: dimgrey;
+}
+
+.article-page-site-description{
+	color: dimgrey;
+}
+
+.write-article{
+	background-color: whitesmoke;
+	margin: 20px 50px 20px 50px;
+	padding: 30px !important;
+}
+
+.write-article-header{
+	padding-right: 30px;
+	padding-bottom: 10px;
+	padding-top: 0px;
+	padding-left: 30px;
+}
+
+.btn-submit-article{
+	margin: 15px;
+}
+
+.article-info-input{
+	height: 34px !important;
+}
