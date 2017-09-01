@@ -1,83 +1,185 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>常用工具</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		<link rel="stylesheet" href="{{static_url('css/main.css')}}" />
-		<script src="https://ajax.googleapis.bootcss.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title>常用工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
+    <script src="https://ajax.googleapis.bootcss.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
 
-	<body>
-		<div class="container-fluid home-bar">
-			<a href="index.html" class="btn-info"><span type="button" class="glyphicon glyphicon-home pull-left home-logo"></span></a>
-			<a href="add_article.html" class="btn-info"><span type="button" class="glyphicon glyphicon-pencil pull-right home-logo"></span></a>
-		</div>
-		<div class="jumbotron jumbotron-small text-center">
-			<h1>常用工具</h1>
-			<form class="form-inline">
-				<input type="search" class="form-control" size="50" placeholder="需要搜索的内容…">
-				<button type="button" class="btn btn-info">搜索</button>
-			</form>
-		</div>
+<body id="toolsPage">
+<div class="container-fluid home-bar">
+    <a href="/" class="btn-info"><span type="button"
+                                       class="glyphicon glyphicon-home pull-left home-logo"></span></a>
+    <a href="add_article.html" class="btn-info"><span type="button"
+                                                      class="glyphicon glyphicon-pencil pull-right home-logo"></span></a>
+</div>
+<div class="jumbotron jumbotron-small text-center">
+    <h1>常用工具</h1>
+    <form class="form-inline">
+        <input type="search" class="form-control" size="50" placeholder="需要搜索的内容…">
+        <button type="button" class="btn btn-info">搜索</button>
+    </form>
+</div>
 
-		<div class="container-fluid">
-			<div id="row">
-				<div class="col-lg-9">
-					<div id="tool-class-list" class="list-group">
-						<!--<a href="#" class="list-group-item">
-							<label class="label label-info">语言</label>
-							<span>句法解析工具</span>
-						</a>
-						<a href="#" class="list-group-item">
-							<label class="label label-info">语言</label>
-							<span>bnf相关工具</span>
-						</a>
-						<a href="#" class="list-group-item">
-							<label class="label label-info">声学</label>
-							<span>升采样工具</span>
-						</a>-->
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="panel panel-info">
-						<div class="panel-heading">工具分类</div>
-						<div class="list-group">
-							<a href="#" class="list-group-item">
-								<label class="label label-info">语言</label><span>语言模型相关</span><span class="badge">12</span>
-							</a>
-							<a href="#" class="list-group-item">
-								<label class="label label-info">声学</label><span>声学模型相关</span><span class="badge">8</span>
-							</a>
-							<a href="#" class="list-group-item">
-								<label class="label label-info">其他</label><span>其他工具</span><span class="badge">3</span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<script>
-				for(i = 0; i < 20; i++) {
-					var classPanel = document.getElementById("tool-class-list");
-					var listItem = document.createElement("a");
-					var itemLabel = document.createElement("label");
-					var itemName = document.createElement("span");
+<div class="container-fluid">
+    <div id="row">
+        <div class="col-lg-9">
+            <div id="tool-class-list" class="list-group">
+                <!--<a href="#" class="list-group-item">
+                    <label class="label label-info">语言</label>
+                    <span>句法解析工具</span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <label class="label label-info">语言</label>
+                    <span>bnf相关工具</span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <label class="label label-info">声学</label>
+                    <span>升采样工具</span>
+                </a>-->
+            </div>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <ul class="pager">
+                        <li class="previous"><a onclick="prePage()">Previous</a></li>
+                        <li class="next"><a onclick="nextPage()">Next</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">工具分类</div>
+                <div id="article_class_list" class="list-group">
+                </div>
+            </div>
+        </div>
 
-					listItem.href = "article.html";
-					listItem.className = "list-group-item";
-					itemLabel.className = "label label-info";
-					itemLabel.innerHTML = "标签";
-					itemName.innerHTML = "句法解析工具";
-					listItem.append(itemLabel);
-					listItem.append(itemName);
-					classPanel.append(listItem);
-				}
-			</script>
+    </div>
 
-		</div>
-	</body>
+    <footer class="container-fluid main-container-fluid text-center">
+        <div class="row">
+            <a href="#toolsPage" class="col-lg-12" title="To Top">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-2">
+                <a href="#" title="查看隐私政策">隐私政策</a>
+            </div>
+            <div class="col-sm-2">
+                <a href="#" title="查看平台信息">平台信息</a>
+            </div>
+            <div class="col-sm-2">
+                <a href="#" title="查看免责声明">免责声明</a>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <br>
+        <p>Presented by
+            <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
+        </p>
+    </footer>
+
+    <script>
+        var PAGE_NUM = 1;
+        var ARTICLE_CLASS = "all";
+
+        function getArticleClassInfo() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState === 4 && xhttp.status === 200) {
+                    console.log(xhttp.responseText);
+                    var article_classes = eval("(" + xhttp.responseText + ")");
+                    for (var i = 0; i < getJsonLength(article_classes); i++) {
+                        $("#article_class_list").append("<a href=\"#\" onclick=getPageInfo(1,\"" + article_classes[i].articleClass + "\") class=\"list-group-item\">\n" +
+                            "<label class=\"label label-info\">" + article_classes[i].articleClass + "</label><span class=\"badge\">" + article_classes[i].articleClassCount + "</span>\n" +
+                            "</a>")
+                    }
+                }
+            };
+            xhttp.open("GET", "tools.html?param=article_class", true);
+            xhttp.send();
+        }
+
+        function nextPage() {
+            getPageInfo(++PAGE_NUM, ARTICLE_CLASS);
+        }
+
+        function prePage() {
+
+            if (PAGE_NUM - 1 > 0) {
+                getPageInfo(--PAGE_NUM, ARTICLE_CLASS);
+            } else {
+
+            }
+        }
+
+        function getPageInfo(page_num, article_class) {
+            var xhttp = new XMLHttpRequest();
+            if (ARTICLE_CLASS !== article_class) {
+                PAGE_NUM = 1;
+                ARTICLE_CLASS = article_class
+            }
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState === 4 && xhttp.status === 200) {
+                    console.log(xhttp.responseText);
+                    var articles = eval("(" + xhttp.responseText + ")");
+                    var classPanel = document.getElementById("tool-class-list");
+                    var len = getJsonLength(articles)
+                    if (len === 0) {
+                        return
+                    }
+                    classPanel.innerHTML = "";
+                    for (var i = 0; i < len; i++) {
+                        var listItem = document.createElement("a");
+                        var itemLabel = document.createElement("label");
+                        var itemName = document.createElement("span");
+                        listItem.href = "article?article_id=" + articles[i]._id;
+                        listItem.className = "list-group-item";
+                        itemLabel.className = "label label-info article-item";
+                        itemLabel.innerHTML = articles[i].articleClass;
+                        itemName.innerHTML = articles[i].articleTitle;
+                        itemName.className = "article-item";
+                        listItem.append(itemLabel);
+                        listItem.append(itemName);
+                        classPanel.append(listItem);
+                    }
+                }
+            };
+            if (article_class === "all") {
+                xhttp.open("GET", "tools.html?param=get_articles&offset=" + (PAGE_NUM - 1) * 10 + "&limit=10", true);
+            } else {
+                xhttp.open("GET", "tools.html?param=get_articles&offset=" + (page_num - 1) * 10 + "&limit=10&article_class=" + article_class, true);
+            }
+            xhttp.send();
+        }
+
+        function getJsonLength(jsonData) {
+            var jsonLength = 0;
+            for (var item in jsonData) {
+                jsonLength++;
+            }
+            return jsonLength;
+        }
+
+        $(document).ready(function () {
+            getPageInfo(PAGE_NUM, ARTICLE_CLASS);
+            getArticleClassInfo()
+
+        });
+
+    </script>
+
+</div>
+</body>
 
 </html>

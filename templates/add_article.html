@@ -17,12 +17,13 @@
     <script src="{{static_url('js/bootstrap-wysiwyg.js')}}"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
+    <script src="{{static_url('js/jquery.base64.js')}}"></script>
 </head>
 
 <body id="writeArticlePage" class="home-bar">
 <div class="container-fluid home-bar">
-    <a href="index.html" class="btn-info"><span type="button"
-                                                class="glyphicon glyphicon-home pull-left home-logo"></span></a>
+    <a href="/" class="btn-info"><span type="button"
+                                       class="glyphicon glyphicon-home pull-left home-logo"></span></a>
 </div>
 
 <div class="container-fluid thumbnail write-article">
@@ -70,6 +71,15 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-11">
+            <div class="form-group">
+                <label for="articleDescription">一句话描述工具:</label>
+                <input type="text" class="form-control article-info-input" id="articleDescription">
+            </div>
+        </div>
+    </div>
+
     <div id="alerts"></div>
     <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
         <div class="btn-group">
@@ -109,7 +119,7 @@
             <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
             <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
             <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-outdent"></i></a>
-            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indet"></i></a>
+            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
         </div>
         <div class="btn-group">
             <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
@@ -142,9 +152,7 @@
         <button id="submitArticleButton" class="btn btn-success pull-right">提交</button>
     </div>
 
-    <div id="editor">
-        开始描述&hellip;
-    </div>
+    <div id="editor"></div>
 
     <footer class="container-fluid main-container-fluid text-center">
         <div class="row">
@@ -181,6 +189,13 @@
 </script>
 
 <script>
+    function runCode(html) {
+        var newwin = window.open('', '', '');
+        newwin.opener = null;
+        newwin.document.write(html);
+        newwin.document.close();
+    }
+
     function getNowFormatDate() {
         var date = new Date();
         var seperator1 = "-";
@@ -199,36 +214,40 @@
         return currentdate;
     }
 
+    $.base64.utf8encode = true;
+
     $(document).ready(function () {
         $("#submitArticleButton").click(function () {
-            var articleContent = $("#editor").wysiwyg();
-            var articleTitle = $("#articleTitle").val();
-            var articleWriter = $("#articleWriter").val();
-            var articleClass = $("#curArticleClass").val();
+            var articleContent = $.base64.btoa($("#editor").html());
+            var articleDescription = $.base64.btoa($("#articleDescription").val());
+            var articleTitle = $.base64.btoa($("#articleTitle").val());
+            var articleWriter = $.base64.btoa($("#articleWriter").val());
+            var articleClass = $.base64.btoa($("#curArticleClass").html());
+            console.log(articleClass);
             var articleDate = getNowFormatDate();
             $.ajax({
-                url: "http://localhost:8000/add_article.html",
+                url: "add_article.html",
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 data: JSON.stringify({
                     'articleTitle': articleTitle,
                     'articleWriter': articleWriter,
                     'articleClass': articleClass,
+                    'articleDescription': articleDescription,
                     'articleDate': articleDate,
                     'articleContent': articleContent
                 }),
                 dataType: "text",
                 success: function (result) {
-                    if (result == "success") {
-                        obj.parents('form').submit();
-                    } else {
-                    }
+                    console.log(result);
+//                    runCode(result)
+                    window.location = "article?article_id=" + result;
                 },
                 error: function (msg) {
-                    $(".notice").html('Error:' + msg);
+
                 }
-            })
-            return false;
+            });
+            return true;
         })
     });
 </script>
