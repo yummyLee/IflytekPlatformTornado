@@ -15,7 +15,8 @@
     <script src="{{static_url('external/google-code-prettify/prettify.js')}}"></script>
     <link href="{{static_url('css/index.css')}}" rel="stylesheet">
     <script src="{{static_url('js/bootstrap-wysiwyg.js')}}"></script>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
     <script src="{{static_url('js/jquery.base64.js')}}"></script>
 </head>
@@ -52,7 +53,8 @@
             <label for="articleClass">文章分类:</label><br>
             <div class="btn-group" id="articleClass">
                 <button id="curArticleClass" type="button" class="btn btn-default dropdown-toggle"
-                        data-toggle="dropdown">默认</button>
+                        data-toggle="dropdown">默认
+                </button>
                 <ul class="dropdown-menu" role="menu">
                     <li>
                         <a>语言模型</a>

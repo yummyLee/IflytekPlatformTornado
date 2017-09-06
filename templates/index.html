@@ -5,10 +5,10 @@
     <title>语言模型数据管理平台</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
-    <script src="https://ajax.googleapis.bootcss.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
 
 </head>
 
@@ -22,12 +22,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">L</a>
+            <a class="navbar-brand" href="#">{{user}}</a>
         </div>
         <div id="myNavbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#tool">常见工具</a>
+                    <a href="#tool">常用工具</a>
                 </li>
                 <li>
                     <a href="#lmodel">语言模型</a>
@@ -228,7 +228,7 @@
     </div>
 </div>
 
-<div class="container-fluid main-container-fluid bg-grey">
+<div id=help class="container-fluid main-container-fluid bg-grey">
     <a href="#" class="a-black" title="查看更多帮助">
         <h2>帮助</h2></a>
     <h4>这里为你提供一些答案。</h4>
@@ -236,7 +236,6 @@
         <a href="#" class="a-black list-group-item">使用相关<span class="badge pull-right">43</span></a>
         <a href="#" class="a-black list-group-item">模型相关<span class="badge pull-right">213</span></a>
         <a href="#" class="a-black list-group-item">业务相关<span class="badge pull-right">32</span></a>
-        </li>
     </ul>
 </div>
 

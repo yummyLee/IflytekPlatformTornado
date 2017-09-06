@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <title>常用工具</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
-    <script src="https://ajax.googleapis.bootcss.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
 </head>
 
 <body id="toolsPage">
@@ -30,18 +31,7 @@
     <div id="row">
         <div class="col-lg-9">
             <div id="tool-class-list" class="list-group">
-                <!--<a href="#" class="list-group-item">
-                    <label class="label label-info">语言</label>
-                    <span>句法解析工具</span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <label class="label label-info">语言</label>
-                    <span>bnf相关工具</span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <label class="label label-info">声学</label>
-                    <span>升采样工具</span>
-                </a>-->
+
             </div>
             <div class="row">
                 <div class="col-lg-2"></div>
@@ -133,25 +123,17 @@
                 if (xhttp.readyState === 4 && xhttp.status === 200) {
                     console.log(xhttp.responseText);
                     var articles = eval("(" + xhttp.responseText + ")");
-                    var classPanel = document.getElementById("tool-class-list");
-                    var len = getJsonLength(articles)
+                    var len = getJsonLength(articles);
                     if (len === 0) {
                         return
                     }
-                    classPanel.innerHTML = "";
+                    $("#tool-class-list").empty();
                     for (var i = 0; i < len; i++) {
-                        var listItem = document.createElement("a");
-                        var itemLabel = document.createElement("label");
-                        var itemName = document.createElement("span");
-                        listItem.href = "article?article_id=" + articles[i]._id;
-                        listItem.className = "list-group-item";
-                        itemLabel.className = "label label-info article-item";
-                        itemLabel.innerHTML = articles[i].articleClass;
-                        itemName.innerHTML = articles[i].articleTitle;
-                        itemName.className = "article-item";
-                        listItem.append(itemLabel);
-                        listItem.append(itemName);
-                        classPanel.append(listItem);
+                        $("#tool-class-list").append("<a href=\"article?article_id=" + articles[i]._id + "\" class=\"list-group-item\">" +
+                            "<label class=\"label label-info article-item\">" + articles[i].articleClass + "</label>" +
+                            "<span class=\"article-item\">" + articles[i].articleTitle + "</span>" +
+                            "</a>"
+                        );
                     }
                 }
             };
@@ -174,7 +156,6 @@
         $(document).ready(function () {
             getPageInfo(PAGE_NUM, ARTICLE_CLASS);
             getArticleClassInfo()
-
         });
 
     </script>

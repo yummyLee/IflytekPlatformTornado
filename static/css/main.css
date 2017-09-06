@@ -167,3 +167,9 @@ body .article-item {
 .article-img {
     max-width: 100%;
 }
+
+.blue-bg {
+    color: white;
+    padding: 100px 25px;
+    background-color: deepskyblue;
+}

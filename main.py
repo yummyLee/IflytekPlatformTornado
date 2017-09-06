@@ -11,7 +11,7 @@ from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8000, help="run on the given port", type=int)
+define("port", default=8007, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -21,12 +21,34 @@ client = MongoClient(MONGODB_DB_URL)
 db = client[MONGODB_DB_NAME]
 
 
-class IndexHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
     def data_received(self, chunk):
         pass
 
-    def get(self, *args, **kwargs):
-        self.render("index.html")
+    def get_current_user(self):
+        return self.get_secure_cookie("username")
+
+
+class LoginHandler(BaseHandler):
+    def get(self):
+        self.render('login.html')
+
+    def post(self):
+        self.set_secure_cookie("username", self.get_argument("username"))
+        self.redirect("/")
+
+
+class LogoutHandler(BaseHandler):
+    def get(self):
+        if self.get_argument("logout", None):
+            self.clear_cookie("username")
+            self.redirect("/")
+
+
+class IndexHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        self.render('index.html', user=self.current_user)
 
 
 # 处理工具页面的请求
@@ -50,6 +72,7 @@ class ToolHandler(tornado.web.RequestHandler):
                     articles = []
                     for a in results:
                         a["_id"] = a["_id"].__str__()
+                        a["articleContent"] = ""
                         articles.append(a)
                     print(articles)
                     articles = json.dumps(articles)
@@ -118,6 +141,8 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", IndexHandler),
+            (r"/login", LoginHandler),
+            (r"/logout", LogoutHandler),
             (r"/tools.html", ToolHandler),
             (r"/article", ArticleHandler),
             (r"/add_article.html", AddArticleHandler)
@@ -126,7 +151,10 @@ class Application(tornado.web.Application):
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             debug=True,
-            autoescape=None
+            autoescape=None,
+            xsrf_cookies=True,
+            login_url="/login",
+            cookie_secret="bZJc2sWbQLAos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ89E="
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 
