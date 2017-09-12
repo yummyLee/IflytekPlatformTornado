@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+/*#allContainer{*/
+/*padding-top: 100px;*/
+/*}*/
+
 .clearfix {
     overflow: auto;
     _height: 1%
@@ -14,7 +18,7 @@ a:hover {
 }
 
 .container-fluid {
-    padding: 20px;
+    padding: 0;
 }
 
 .jumbotron {
@@ -53,9 +57,13 @@ a:hover {
     background-color: white !important;
 }
 
-.navbar li a,
-.navbar .navbar-brand {
+.navbar-color li a,
+.navbar-color {
     color: white !important;
+}
+
+.navbar-brand {
+    color: #333333;
 }
 
 .navbar-nav li a:hover,
@@ -149,7 +157,7 @@ a:hover {
 }
 
 .write-article-header {
-    padding: 0px 30px 10px;
+    padding: 0 30px 10px;
 }
 
 .btn-submit-article {
@@ -172,4 +180,13 @@ body .article-item {
     color: white;
     padding: 100px 25px;
     background-color: deepskyblue;
+}
+
+.user-menu {
+    color: #333;
+}
+
+.blue-bg-white-font, .blue-bg-white-font a {
+    background-color: deepskyblue;
+    color: white;
 }

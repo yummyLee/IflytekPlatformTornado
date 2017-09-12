@@ -9,6 +9,7 @@
     <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
     <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
+    <script src="{{static_url('js/bootstrap.js')}}"></script>
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
 
 </head>
@@ -16,6 +17,7 @@
 <body id="articlePage" class="article-page-bg">
 
 <div class="container-fluid thumbnail article-page-main">
+
     <div id="row">
         <h1><b>语言模型数据管理平台</b></h1>
         <h4 class="article-page-site-description">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;——让世界聆听我们的声音</h4>
@@ -24,7 +26,7 @@
                 <a href="/">首页</a>
             </li>
             <li>
-                <a href="tools.html">常用工具</a>
+                <a href="tools">常用工具</a>
             </li>
             <li>
                 <a href="#">语言模型</a>
@@ -43,6 +45,7 @@
             </li>
         </ul>
     </div>
+
     <div class="row">
         <div class="col-lg-8 article-page-main">
             <article>
@@ -119,7 +122,7 @@
         }
 
         $(document).ready(function () {
-            getArticles()
+            getArticles();
         });
 
     </script>

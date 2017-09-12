@@ -6,12 +6,13 @@ import tornado.options
 import tornado.web
 import base64
 import json
+import uuid
 
 from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8007, help="run on the given port", type=int)
+define("port", default=8001, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -28,21 +29,40 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie("username")
 
+        # def set_current_user(self):
+        #     self.set_secure_cookie("")
+
 
 class LoginHandler(BaseHandler):
     def get(self):
         self.render('login.html')
 
     def post(self):
-        self.set_secure_cookie("username", self.get_argument("username"))
-        self.redirect("/")
+        # self.set_secure_cookie("username", self.get_argument("username"))
+        username = self.get_argument("username")
+        password = self.get_argument("password")
+        print("got post, " + username + ", " + password)
+        result = db.user.find_one({"username": username, "password": password})
+        if result is not None:
+            self.set_secure_cookie("username", username)
+            self.write(json.dumps({
+                "loginResponseType": "success",
+                "loginResponseTips": "登录成功。。"
+            }))
+        else:
+            self.write(json.dumps({
+                "loginResponseType": "failed",
+                "loginResponseTips": "用户名或密码错误。。"
+            }))
 
 
+# 处理登出请求
 class LogoutHandler(BaseHandler):
     def get(self):
-        if self.get_argument("logout", None):
-            self.clear_cookie("username")
-            self.redirect("/")
+        self.clear_cookie("username")
+        self.write(json.dumps({
+            "logoutResponseType": "success"
+        }))
 
 
 class IndexHandler(BaseHandler):
@@ -52,10 +72,11 @@ class IndexHandler(BaseHandler):
 
 
 # 处理工具页面的请求
-class ToolHandler(tornado.web.RequestHandler):
+class ToolHandler(BaseHandler):
     def data_received(self, chunk):
         pass
 
+    @tornado.web.authenticated
     def get(self, *args, **kwargs):
         param = self.get_argument("param", None)
         if param is not None:
@@ -65,6 +86,7 @@ class ToolHandler(tornado.web.RequestHandler):
                 if offset is not None and limit is not None:
                     article_class = self.get_argument("article_class", None)
                     if article_class is not None:
+                        # 根据偏移量和查询限制数量在数据库中查找
                         results = db.article.tools.find({"articleClass": article_class}).skip(int(offset)).limit(
                             int(limit))
                     else:
@@ -87,7 +109,8 @@ class ToolHandler(tornado.web.RequestHandler):
                 print(article_classes)
                 self.write(article_classes)
         else:
-            self.render("tools.html")
+            self.set_header("Content-Type", "text/html")
+            self.render("tools.html", user=self.current_user)
 
 
 # 处理文章页面的请求
@@ -110,12 +133,15 @@ class ArticleHandler(tornado.web.RequestHandler):
                     articleClass=article_class)
 
 
-class AddArticleHandler(tornado.web.RequestHandler):
+class AddArticleHandler(BaseHandler):
     def data_received(self, chunk):
         pass
 
+    @tornado.web.authenticated
     def get(self, *args, **kwargs):
-        self.render("add_article.html")
+        print("got request")
+        self.set_header("Content-Type", "text/html")
+        self.render("add_article.html", user=self.current_user)
 
     def post(self, *args, **kwargs):
         data = self.request.body
@@ -143,18 +169,18 @@ class Application(tornado.web.Application):
             (r"/", IndexHandler),
             (r"/login", LoginHandler),
             (r"/logout", LogoutHandler),
-            (r"/tools.html", ToolHandler),
+            (r"/tools", ToolHandler),
             (r"/article", ArticleHandler),
-            (r"/add_article.html", AddArticleHandler)
+            (r"/add_article", AddArticleHandler)
         ]
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             debug=True,
             autoescape=None,
-            xsrf_cookies=True,
+            xsrf_cookies=False,
             login_url="/login",
-            cookie_secret="bZJc2sWbQLAos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ89E="
+            cookie_secret=base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 

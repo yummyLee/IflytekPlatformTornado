@@ -11,7 +11,7 @@
     <link href="{{static_url('css/font-awesome.css')}}" rel="stylesheet">
     <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
     <script src="{{static_url('external/jquery.hotkeys.js')}}"></script>
-    <script src="{{static_url('js/bootstrap.min.js')}}"></script>
+    <script src="{{static_url('js/bootstrap.js')}}"></script>
     <script src="{{static_url('external/google-code-prettify/prettify.js')}}"></script>
     <link href="{{static_url('css/index.css')}}" rel="stylesheet">
     <script src="{{static_url('js/bootstrap-wysiwyg.js')}}"></script>
@@ -19,22 +19,42 @@
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
     <script src="{{static_url('js/jquery.base64.js')}}"></script>
+    <script src="{{static_url('js/myjs.js')}}"></script>
 </head>
 
 <body id="writeArticlePage" class="home-bar">
+
 <div class="container-fluid home-bar">
-    <a href="/" class="btn-info"><span type="button"
-                                       class="glyphicon glyphicon-home pull-left home-logo"></span></a>
+    <div class="container-fluid home-bar">
+        <div class="row">
+            <div class="col-lg-1">
+                <a href="/" class="btn-info"><span type="button"
+                                                   class="glyphicon glyphicon-home pull-left home-logo"></span></a>
+            </div>
+            <div class="dropdown col-lg-1" href="#">
+                <a class="dropdown-toggle btn btn-sm btn-info" data-toggle="dropdown">{{user}}<span
+                        class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a id="userInfo" href="#">个人信息</a></li>
+                    <li><a id="userModifyPassword" href="#">修改密码</a></li>
+                    <li class="divider"></li>
+                    <li><a id="userLogout" href="#">退出登录</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-1">
+                <a id="addArticleBtn" href="/add_article" class="btn-info"><span type="button"
+                                                                                 class="glyphicon glyphicon-pencil pull-right home-logo"></span></a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="container-fluid thumbnail write-article">
-
+<div id="addArticleBodyContainer" class="container-fluid thumbnail write-article">
     <div class="write-article-header">
         <h1>添加工具 <br/>
             <small>为你的工具添加说明</small>
         </h1>
     </div>
-
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
@@ -53,8 +73,7 @@
             <label for="articleClass">文章分类:</label><br>
             <div class="btn-group" id="articleClass">
                 <button id="curArticleClass" type="button" class="btn btn-default dropdown-toggle"
-                        data-toggle="dropdown">默认
-                </button>
+                        data-toggle="dropdown">默认</button>
                 <ul class="dropdown-menu" role="menu">
                     <li>
                         <a>语言模型</a>
@@ -72,7 +91,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-11">
             <div class="form-group">
@@ -81,7 +99,6 @@
             </div>
         </div>
     </div>
-
     <div id="alerts"></div>
     <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
         <div class="btn-group">
@@ -153,165 +170,34 @@
 
         <button id="submitArticleButton" class="btn btn-success pull-right">提交</button>
     </div>
-
+    {% raw xsrf_form_html() %}
     <div id="editor"></div>
-
-    <footer class="container-fluid main-container-fluid text-center">
-        <div class="row">
-            <a href="#writeArticlePage" class="col-lg-12" title="To Top">
-                <span class="glyphicon glyphicon-chevron-up"></span>
-            </a>
-        </div>
-        <div class="row text-center">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-2">
-                <a href="#" title="查看隐私政策">隐私政策</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" title="查看平台信息">平台信息</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" title="查看免责声明">免责声明</a>
-            </div>
-            <div class="col-sm-3"></div>
-        </div>
-        <br>
-        <p>Presented by
-            <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
-        </p>
-    </footer>
 </div>
 
-<script>
-    $("#articleClass").children().children().children().click(function () {
-        var articleClassName = this.innerHTML;
-        console.log(articleClassName);
-        $("#curArticleClass").html(articleClassName);
-    })
-</script>
-
-<script>
-    function runCode(html) {
-        var newwin = window.open('', '', '');
-        newwin.opener = null;
-        newwin.document.write(html);
-        newwin.document.close();
-    }
-
-    function getNowFormatDate() {
-        var date = new Date();
-        var seperator1 = "-";
-        var seperator2 = ":";
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        if (month >= 1 && month <= 9) {
-            month = "0" + month;
-        }
-        if (strDate >= 0 && strDate <= 9) {
-            strDate = "0" + strDate;
-        }
-        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
-            " " + date.getHours() + seperator2 + date.getMinutes() +
-            seperator2 + date.getSeconds();
-        return currentdate;
-    }
-
-    $.base64.utf8encode = true;
-
-    $(document).ready(function () {
-        $("#submitArticleButton").click(function () {
-            var articleContent = $.base64.btoa($("#editor").html());
-            var articleDescription = $.base64.btoa($("#articleDescription").val());
-            var articleTitle = $.base64.btoa($("#articleTitle").val());
-            var articleWriter = $.base64.btoa($("#articleWriter").val());
-            var articleClass = $.base64.btoa($("#curArticleClass").html());
-            console.log(articleClass);
-            var articleDate = getNowFormatDate();
-            $.ajax({
-                url: "add_article.html",
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({
-                    'articleTitle': articleTitle,
-                    'articleWriter': articleWriter,
-                    'articleClass': articleClass,
-                    'articleDescription': articleDescription,
-                    'articleDate': articleDate,
-                    'articleContent': articleContent
-                }),
-                dataType: "text",
-                success: function (result) {
-                    console.log(result);
-//                    runCode(result)
-                    window.location = "article?article_id=" + result;
-                },
-                error: function (msg) {
-
-                }
-            });
-            return true;
-        })
-    });
-</script>
-
-<script>
-    $(function () {
-        function initToolbarBootstrapBindings() {
-            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                    'Times New Roman', 'Verdana'
-                ],
-                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-            $.each(fonts, function (idx, fontName) {
-                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-            });
-            $('a[title]').tooltip({
-                container: 'body'
-            });
-            $('.dropdown-menu input').click(function () {
-                return false;
-            })
-                .change(function () {
-                    $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-                })
-                .keydown('esc', function () {
-                    this.value = '';
-                    $(this).change();
-                });
-
-            $('[data-role=magic-overlay]').each(function () {
-                var overlay = $(this),
-                    target = $(overlay.data('target'));
-                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-            });
-            if ("onwebkitspeechchange" in document.createElement("input")) {
-                var editorOffset = $('#editor').offset();
-                $('#voiceBtn').css('position', 'absolute').offset({
-                    top: editorOffset.top,
-                    left: editorOffset.left + $('#editor').innerWidth() - 35
-                });
-            } else {
-                $('#voiceBtn').hide();
-            }
-        };
-
-        function showErrorAlert(reason, detail) {
-            var msg = '';
-            if (reason === 'unsupported-file-type') {
-                msg = "Unsupported format " + detail;
-            } else {
-                console.log("error uploading file", reason, detail);
-            }
-            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
-        };
-        initToolbarBootstrapBindings();
-        $('#editor').wysiwyg({
-            fileUploadError: showErrorAlert
-        });
-        window.prettyPrint && prettyPrint();
-    });
-</script>
+<footer class="container-fluid main-container-fluid text-center blue-bg-white-font">
+    <div class="row">
+        <a href="#writeArticlePage" class="col-lg-12" title="To Top">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+            <a href="#" title="查看隐私政策">隐私政策</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看平台信息">平台信息</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看免责声明">免责声明</a>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <br>
+    <p>Presented by
+        <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
+    </p>
+</footer>
 
 </body>
 
