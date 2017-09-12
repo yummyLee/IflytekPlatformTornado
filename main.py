@@ -12,7 +12,7 @@ from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8001, help="run on the given port", type=int)
+define("port", default=8000, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -163,6 +163,21 @@ class AddArticleHandler(BaseHandler):
         self.write(str(article_id))
 
 
+class BusinessHandler(BaseHandler):
+    def data_received(self, chunk):
+        pass
+
+    @tornado.web.authenticated
+    def get(self, *args, **kwargs):
+
+        param = self.get_argument("param")
+        if param is not None:
+            # if param == "business_class":
+
+        else:
+            self.render("business.html", user=self.current_user)
+
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -171,7 +186,8 @@ class Application(tornado.web.Application):
             (r"/logout", LogoutHandler),
             (r"/tools", ToolHandler),
             (r"/article", ArticleHandler),
-            (r"/add_article", AddArticleHandler)
+            (r"/add_article", AddArticleHandler),
+            (r"/business", BusinessHandler)
         ]
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),

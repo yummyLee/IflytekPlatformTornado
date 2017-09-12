@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>语言模型数据管理平台</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
+    <script src="{{static_url('js/bootstrap.js')}}"></script>
+    <script src="{{static_url('js/myjs.js')}}"></script>
+</head>
+<body class="business-bg">
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-fixed-top navbar-other">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">语言模型数据管理平台</a>
+            </div>
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown list-item" href="#">
+                    <a class="dropdown-toggle btn btn-sm btn-info user-btn" data-toggle="dropdown">{{user}}<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="userInfo" href="#">个人信息</a></li>
+                        <li><a id="userModifyPassword" href="#">修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a id="userLogout" href="#">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">业务分类</div>
+                <ul class="panel-body list-gtoup">
+                    <a class="list-group-item">业务1</a>
+                    <a class="list-group-item">业务2</a>
+                    <a class="list-group-item">业务3</a>
+                    <a class="list-group-item">业务4</a>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+
+            <div class="business-content well clearfix">
+
+                <h2 class="text-center">子业务</h2>
+
+                <div class="panel-group">
+                    <div class="col-lg-4 subservice">
+                        <a href="#" class="a-black">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">子业务1</div>
+                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 subservice">
+                        <a href="#" class="a-black">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">子业务1</div>
+                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 subservice">
+                        <a href="#" class="a-black">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">子业务1</div>
+                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 subservice">
+                        <a href="#" class="a-black">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">子业务1</div>
+                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 subservice">
+                        <a href="#" class="a-black">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">子业务1</div>
+                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 subservice">
+                        <a href="#" class="a-black">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">子业务1</div>
+                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 subservice">
+                        <a href="#" class="a-black">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">子业务1</div>
+                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid main-container-fluid text-center blue-bg-white-font">
+    <div class="row">
+        <a href="#writeArticlePage" class="col-lg-12" title="To Top">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+            <a href="#" title="查看隐私政策">隐私政策</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看平台信息">平台信息</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看免责声明">免责声明</a>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <br>
+    <p>Presented by
+        <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
+    </p>
+</footer>
+
+</body>
+</html>

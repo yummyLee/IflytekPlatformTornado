@@ -74,6 +74,7 @@ $(document).ready(function () {
         });
     });
 
+
     // $("#goToTools").click(function () {
     //     var x = new XMLHttpRequest();
     //     x.overrideMimeType("text/html");

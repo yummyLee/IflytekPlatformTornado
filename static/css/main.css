@@ -190,3 +190,35 @@ body .article-item {
     background-color: deepskyblue;
     color: white;
 }
+
+.user-btn {
+    color: white !important;
+}
+
+.blue-bg {
+    background-color: deepskyblue;
+}
+
+.business-bg {
+    background-color: deepskyblue;
+    padding: 60px 30px 30px 30px;
+}
+
+.navbar-other {
+    background-color: deepskyblue;
+    color: white !important;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.navbar-other > div > a {
+    color: white !important;
+}
+
+.subservice {
+    margin-bottom: 15px;
+}
+
+.business-content {
+    min-height: 400px !important;
+}
