@@ -172,8 +172,8 @@ class BusinessHandler(BaseHandler):
 
         param = self.get_argument("param")
         if param is not None:
-            # if param == "business_class":
-
+            if param == "business_class":
+                pass
         else:
             self.render("business.html", user=self.current_user)
 
