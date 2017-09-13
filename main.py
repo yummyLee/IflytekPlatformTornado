@@ -7,12 +7,13 @@ import tornado.web
 import base64
 import json
 import uuid
+import re
 
 from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8000, help="run on the given port", type=int)
+define("port", default=8001, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -170,10 +171,34 @@ class BusinessHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
 
-        param = self.get_argument("param")
+        param = self.get_argument("param", None)
         if param is not None:
             if param == "business_class":
-                pass
+                print("business_class")
+                db_collections = db.collection_names()
+                print(db_collections)
+                businesses = []
+                for col_name in db_collections:
+                    match_result = re.match(r"LM\.business\..*?", col_name)
+                    if match_result:
+                        business = col_name.replace("LM.business.", "")
+                        results = db.LM.business[business].find()
+                        subservices = []
+                        for r in results:
+                            r["_id"] = r["_id"].__str__()
+                            subservices.append(r)
+                        print("business = " + business)
+                        print(subservices)
+                        businesses.append({"business": business, "subservices": subservices})
+                self.write(json.dumps(businesses))
+
+            if param == "get_service_info":
+                business = self.get_argument("business", None)
+                sub_service_name = self.get_argument("sub_service_name", None)
+                if business is not None and sub_service_name is not None:
+                    results = db.LM.business[business].find_one({"subService": sub_service_name})
+                    results["_id"] = results["_id"].__str__()
+                    self.write(results)
         else:
             self.render("business.html", user=self.current_user)
 

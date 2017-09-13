@@ -211,7 +211,7 @@ body .article-item {
     padding-left: 30px;
 }
 
-.navbar-other > div > a {
+.navbar-other > div > a > h4 {
     color: white !important;
 }
 

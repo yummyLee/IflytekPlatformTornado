@@ -5,7 +5,7 @@ function getArticles() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            console.log(xhttp.responseText);
+            // console.log(xhttp.responseText);
             var articles = eval("(" + xhttp.responseText + ")");
             for (var i = 0; i < getJsonLength(articles); i++) {
                 $("#mainToolList").append("<div class=\"col-sm-4\">\n" +
@@ -31,7 +31,7 @@ function getJsonLength(jsonData) {
     return jsonLength;
 }
 
-$(document).ready(function () {
+$("#indexContainer").ready(function () {
     getArticles();
 
     $("#userLogout").click(function () {
@@ -107,7 +107,7 @@ function getArticleClassInfo() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            console.log(xhttp.responseText);
+            // console.log(xhttp.responseText);
             var article_classes = eval("(" + xhttp.responseText + ")");
             for (var i = 0; i < getJsonLength(article_classes); i++) {
                 $("#article_class_list").append("<a href=\"#\" onclick=getPageInfo(1,\"" + article_classes[i].articleClass + "\") class=\"list-group-item\">\n" +
@@ -140,7 +140,7 @@ function getPageInfo(page_num, article_class) {
     }
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            console.log(xhttp.responseText);
+            // console.log(xhttp.responseText);
             var articles = eval("(" + xhttp.responseText + ")");
             var len = getJsonLength(articles);
             if (len === 0) {
@@ -215,7 +215,7 @@ function getNowFormatDate() {
     return currentdate;
 }
 
-$.base64.utf8encode = true;
+// $.base64.utf8encode = true;
 
 $("#addArticleBodyContainer").ready(function () {
     $("#submitArticleButton").click(function () {
@@ -234,14 +234,14 @@ $("#addArticleBodyContainer").ready(function () {
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             data:
                 JSON.stringify({
-                'articleTitle': articleTitle,
-                'articleWriter': articleWriter,
-                'articleClass': articleClass,
-                'articleDescription': articleDescription,
-                'articleDate': articleDate,
-                'articleContent': articleContent,
+                    'articleTitle': articleTitle,
+                    'articleWriter': articleWriter,
+                    'articleClass': articleClass,
+                    'articleDescription': articleDescription,
+                    'articleDate': articleDate,
+                    'articleContent': articleContent,
 
-            }),
+                }),
             dataType: "text",
             success: function (result) {
                 console.log(result);
@@ -313,3 +313,82 @@ $(function () {
     });
     window.prettyPrint && prettyPrint();
 });
+
+/**
+ * business.html
+ **/
+
+$("#businessContainer").ready(function () {
+    console.log("business");
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function () {
+        if (x.readyState === 4 && x.status === 200) {
+            console.log(x.responseText);
+            var businesses = eval("(" + x.responseText + ")")
+            for (var i = 0; i < getJsonLength(businesses); i++) {
+                $("#businessClassList").append(
+                    `<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapse${i}">${businesses[i].business}</a>
+                                </h4>
+                            </div>
+                            <div id="collapse${i}" class="panel-collapse collapse">
+                                <ul class="list-group subservices${i}">
+                                </ul>
+                            </div>
+                        </div>`
+                );
+                for (var j = 0; j < getJsonLength(businesses[i].subservices); j++) {
+                    console.log("subservices = " + businesses[i].subservices[j].subService);
+                    $("#collapse" + i).append(`<li class=\"list-group-item subservice-item\"><a title="${businesses[i].business}\\${businesses[i].subservices[j].subService}">${businesses[i].subservices[j].subService}</a></li>`)
+                }
+            }
+            $(".subservice-item").click(function () {
+                getSubServiceInfo($(this).find(">a").attr("title"));
+
+            })
+        }
+    };
+    x.open("GET", "?param=business_class", true);
+    x.send();
+});
+
+
+function getSubServiceInfo(subServiceName) {
+    var info = subServiceName.split("\\");
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function () {
+        if (x.readyState === 4 && x.status === 200) {
+            // console.log(x.responseText);
+            var sub_service_info = eval("(" + x.responseText + ")");
+            // console.log(sub_service_info);
+            console.log("getSubServiceInfo()-subService" + sub_service_info.subService);
+            document.getElementById("bSubName").innerHTML = sub_service_info.subService;
+            $("#subServiceTableBody").empty();
+            for (var ii in sub_service_info) {
+                // console.log(ii);
+                // console.log(sub_service_info[ii])
+                var ii_content = "";
+                if (typeof sub_service_info[ii] === "object") {
+                    for (var i = 0; i < sub_service_info[ii].length; i++) {
+                        var p = sub_service_info[ii][i];
+                        ii_content += (p + "<br>");
+                    }
+                } else {
+                    ii_content = sub_service_info[ii];
+                }
+
+                if (ii !== "_id") {
+                    $("#subServiceTableBody").append(
+                        `<tr>
+                        <td class="col-lg-4 text-center">${ii}</td>
+                        <td class="col-lg-8 text-center">${ii_content}</td>
+                    </tr>`)
+                }
+            }
+        }
+    };
+    x.open("GET", "?param=get_service_info&business=" + info[0] + "&sub_service_name=" + info[1]);
+    x.send();
+}
