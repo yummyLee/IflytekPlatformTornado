@@ -95,6 +95,15 @@ $("#indexContainer").ready(function () {
 
 });
 
+function getBusiness() {
+    var x = new XMLHttpRequest();
+    if (x.readyState === 4 && x.status === 200) {
+
+    }
+
+    x.open("GET", "/")
+
+}
 
 /**
  * tools.html
@@ -183,12 +192,6 @@ $("#toolsContainer").ready(function () {
     // });
 });
 
-//添加文章页面js
-$("#articleClass").children().children().children().click(function () {
-    var articleClassName = this.innerHTML;
-    console.log(articleClassName);
-    $("#curArticleClass").html(articleClassName);
-});
 
 function runCode(html) {
     var newwin = window.open('', '', '');
@@ -215,9 +218,17 @@ function getNowFormatDate() {
     return currentdate;
 }
 
-// $.base64.utf8encode = true;
+$.base64.utf8encode = true;
 
 $("#addArticleBodyContainer").ready(function () {
+
+    //添加文章页面js
+    $("#articleClass").children().children().children().click(function () {
+        var articleClassName = this.innerHTML;
+        console.log(articleClassName);
+        $("#curArticleClass").html(articleClassName);
+    });
+
     $("#submitArticleButton").click(function () {
         var articleContent = $.base64.btoa($("#editor").html());
         var articleDescription = $.base64.btoa($("#articleDescription").val());
@@ -317,7 +328,7 @@ $(function () {
 /**
  * business.html
  **/
-
+//业务页面加载左边菜单树
 $("#businessContainer").ready(function () {
     console.log("business");
     var x = new XMLHttpRequest();
@@ -339,10 +350,21 @@ $("#businessContainer").ready(function () {
                             </div>
                         </div>`
                 );
-                for (var j = 0; j < getJsonLength(businesses[i].subservices); j++) {
-                    console.log("subservices = " + businesses[i].subservices[j].subService);
-                    $("#collapse" + i).append(`<li class=\"list-group-item subservice-item\"><a title="${businesses[i].business}\\${businesses[i].subservices[j].subService}">${businesses[i].subservices[j].subService}</a></li>`)
+                var sub = businesses[i].subservices;
+                for (var j in sub) {
+                    console.log(j);
+                    $("#collapse" + i).append(`<li class="list-group-item"><div id="sub-models-${i}-${j}" class="panel" data-toggle="collapse" href=""><div class="panel-heading">${sub[j].subServiceName}</div></div></li>`);
+                    var html = "";
+                    html += "<div class='panel-body'>";
+                    html += "<ul id='sub-models-" + i + "-" + j + "' class='list-group'>";
+                    for (var modelType in sub[j].modelTypes) {
+                        html += "<li class='list-group-item subservice-item'><a title=" + businesses[i].business + "\\" + sub[j].subServiceName + "\\" + sub[j].modelTypes[modelType] + " > " + sub[j].modelTypes[modelType] + " </a></li> ";
+                    }
+                    html += "</ul>";
+                    html += "</div>";
+                    $("#sub-models-" + i + "-" + j).append(html);
                 }
+
             }
             $(".subservice-item").click(function () {
                 getSubServiceInfo($(this).find(">a").attr("title"));
@@ -354,10 +376,10 @@ $("#businessContainer").ready(function () {
     x.send();
 });
 
-
-function getSubServiceInfo(subServiceName) {
-    var info = subServiceName.split("\\");
+//加载子业务信息
+function getSubServiceInfo(pInfo) {
     var x = new XMLHttpRequest();
+    var info = pInfo.split("\\");
     x.onreadystatechange = function () {
         if (x.readyState === 4 && x.status === 200) {
             // console.log(x.responseText);
@@ -389,6 +411,6 @@ function getSubServiceInfo(subServiceName) {
             }
         }
     };
-    x.open("GET", "?param=get_service_info&business=" + info[0] + "&sub_service_name=" + info[1]);
+    x.open("GET", "?param=get_service_info&business=" + info[0] + "&sub_service_name=" + info[1] + "&model_type=" + info[2]);
     x.send();
 }
