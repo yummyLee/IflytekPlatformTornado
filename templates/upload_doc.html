@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>添加工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="{{ static_url('external/google-code-prettify/prettify.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/bootstrap-combined.no-icons.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/font-awesome.css') }}" rel="stylesheet">
+    <script src="{{ static_url('js/jquery-3.2.1.js') }}"></script>
+    <script src="{{ static_url('external/jquery.hotkeys.js') }}"></script>
+    <script src="{{ static_url('js/bootstrap.js') }}"></script>
+    <script src="{{ static_url('external/google-code-prettify/prettify.js') }}"></script>
+    <link href="{{ static_url('css/index.css') }}" rel="stylesheet">
+    <script src="{{ static_url('js/bootstrap-wysiwyg.js') }}"></script>
+    <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="{{ static_url('css/main.css') }}"/>
+    <script src="{{ static_url('js/jquery.base64.js') }}"></script>
+    <script src="{{ static_url('js/myjs.js') }}"></script>
+</head>
+
+<body id="uploadDocPage" class="home-bar">
+
+<div class="container-fluid home-bar">
+    <div class="container-fluid home-bar">
+        <div class="row">
+            <div class="col-lg-1">
+                <a href="/" class="btn-info"><span type="button"
+                                                   class="glyphicon glyphicon-home pull-left home-logo"></span></a>
+            </div>
+            <div class="dropdown col-lg-1" href="#">
+                <a class="dropdown-toggle btn btn-sm btn-info" data-toggle="dropdown">{{ user }}<span
+                        class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a id="userInfo" href="#">个人信息</a></li>
+                    <li><a id="userModifyPassword" href="#">修改密码</a></li>
+                    <li class="divider"></li>
+                    <li><a id="userLogout" href="#">退出登录</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-1">
+                <a id="addArticleBtn" href="/add_article" class="btn-info"><span type="button"
+                                                                                 class="glyphicon glyphicon-pencil pull-right home-logo"></span></a>
+            </div>
+            <div class="col-lg-1">
+                <a id="uploadDocument" href="/upload_doc" class="btn-info"><span type="button"
+                                                                                 class="glyphicon glyphicon-circle-arrow-up home-logo"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    /* 此处原本准备实现本地文档上传、在线预览等功能，但相应的接口需要联网才能支持，所以暂不实现
+     * 具体需要实现的时候可参考下列部署方法地址：
+     *  1. http://www.yozodcs.com/help.html#link01
+     *  2. http://www.yozodcs.com/help.html#link01
+     *  3. http://www.cnblogs.com/themost/p/7243511.html
+     */
+    function show() {
+        var reader = new FileReader();
+        reader.onload = function () {
+            alert(this.result)
+        }
+        var f = document.getElementById("folderGetter").files[0];
+        reader.readAsText(f,'gb2312');
+        document.getElementById('TipsForNoTrust').innerHTML='Oops, told you before, nothing to show.'
+    }
+    function openDoc() {
+        alert('come on...')
+    }
+    function putDocToDB() {
+
+    }
+</script>
+<div id="uploadDocBodyContainer" class="container-fluid thumbnail write-article" style="width:90%;height:500px" margin:0 auto>
+    <p></p>
+    <p></p>
+    <br />
+    <br />
+    <p><h3>
+    /* 此处原本准备实现本地文档上传、在线预览等功能，但相应的接口需要联网才能支持，所以暂不实现<br />
+     * 具体需要实现的时候可参考下列部署方法地址：             <br />
+     *  1. http://www.yozodcs.com/help.html#link01            <br />
+     *  2. http://www.yozodcs.com/help.html#link01            <br />
+     *  3. http://www.cnblogs.com/themost/p/7243511.html      <br />
+     *  <strong>当前推荐使用在线编辑上传功能</strong>         <br />
+     */                                                       <br />
+    </h3></p>
+    <p><input type="file" name="local_document" id="folderGetter" style="margin:auto;width:160px" /></p>
+    <input type="button" value="在线预览" onclick="show()" style="margin:auto;width:160px;text-align:center" />
+    <input type="button" value="点击上传" onclick="openDoc()" style="margin:auto;width:160px" />
+    <br /><br />
+    <strong><p id="TipsForNoTrust"></p></strong>
+    <br /><br />
+    <p><a href="/add_article"></href><input type="button" value="点此返回在线编辑" style="margin:auto;width:160px" /></a></p>
+    <p></p>
+</div>
+
+<footer class="container-fluid main-container-fluid text-center blue-bg-white-font">
+    <div class="row">
+        <a href="#writeArticlePage" class="col-lg-12" title="To Top">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+            <a href="#" title="查看隐私政策">隐私政策</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看平台信息">平台信息</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看免责声明">免责声明</a>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <br>
+    <p>Presented by
+        <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
+    </p>
+</footer>
+</body>
+</html>
