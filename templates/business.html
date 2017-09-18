@@ -11,115 +11,159 @@
     <script src="{{static_url('js/bootstrap.js')}}"></script>
     <script src="{{static_url('js/myjs.js')}}"></script>
 </head>
-<body class="business-bg">
+<body id="businessBody" class="business-bg">
 
-<div class="container-fluid">
-    <div class="row">
-        <nav class="navbar navbar-fixed-top navbar-other">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">语言模型数据管理平台</a>
-            </div>
-            <ul class="nav navbar-nav pull-right">
-                <li class="dropdown list-item" href="#">
-                    <a class="dropdown-toggle btn btn-sm btn-info user-btn" data-toggle="dropdown">{{user}}<span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a id="userInfo" href="#">个人信息</a></li>
-                        <li><a id="userModifyPassword" href="#">修改密码</a></li>
-                        <li class="divider"></li>
-                        <li><a id="userLogout" href="#">退出登录</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">业务分类</div>
-                <ul class="panel-body list-gtoup">
-                    <a class="list-group-item">业务1</a>
-                    <a class="list-group-item">业务2</a>
-                    <a class="list-group-item">业务3</a>
-                    <a class="list-group-item">业务4</a>
+<div id="businessContainer">
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-fixed-top navbar-other">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><h4>语言模型数据管理平台</h4></a>
+                </div>
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown list-item" href="#">
+                        <a class="dropdown-toggle btn btn-sm btn-info user-btn" data-toggle="dropdown">{{user}}<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a id="userInfo" href="#">个人信息</a></li>
+                            <li><a id="userModifyPassword" href="#">修改密码</a></li>
+                            <li class="divider"></li>
+                            <li><a id="userLogout" href="#">退出登录</a></li>
+                        </ul>
+                    </li>
                 </ul>
-
-            </div>
+            </nav>
         </div>
+    </div>
 
-        <div class="col-lg-9">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">业务分类</div>
+                    <div id="businessClassList" class="panel-group">
+                        <!--<div class="panel panel-default">-->
+                        <!--<div class="panel-heading">-->
+                        <!--<h4 class="panel-title">-->
+                        <!--<a data-toggle="collapse" href="#collapse1">Collapsible list group</a>-->
+                        <!--</h4>-->
+                        <!--</div>-->
+                        <!--<div id="collapse1" class="panel-collapse collapse">-->
+                        <!--<ul class="list-group">-->
+                        <!--<li class="list-group-item">One</li>-->
+                        <!--<li class="list-group-item">Two</li>-->
+                        <!--<li class="list-group-item">Three</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <!--</div>-->
 
-            <div class="business-content well clearfix">
+                    </div>
+                </div>
+            </div>
 
-                <h2 class="text-center">子业务</h2>
+            <div class="col-lg-9">
 
-                <div class="panel-group">
-                    <div class="col-lg-4 subservice">
-                        <a href="#" class="a-black">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">子业务1</div>
-                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 subservice">
-                        <a href="#" class="a-black">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">子业务1</div>
-                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 subservice">
-                        <a href="#" class="a-black">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">子业务1</div>
-                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 subservice">
-                        <a href="#" class="a-black">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">子业务1</div>
-                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 subservice">
-                        <a href="#" class="a-black">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">子业务1</div>
-                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 subservice">
-                        <a href="#" class="a-black">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">子业务1</div>
-                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 subservice">
-                        <a href="#" class="a-black">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">子业务1</div>
-                                <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                            </div>
-                        </a>
+                <div class="business-content well clearfix">
+
+                    <div id="subServiceDetail">
+                        <h2 id="bSubName" class="text-center">subServiceName</h2>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-lg-4 text-center">Class</th>
+                                <th class="col-lg-8 text-center">Description</th>
+                            </tr>
+                            </thead>
+                            <tbody id="subServiceTableBody">
+                            <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                            <!--</tr>-->
+                            </tbody>
+                        </table>
                     </div>
 
+                    <div id="subServiceContainer" style="display: none">
+                        <h2 class="text-center">子业务</h2>
+
+                        <div class="panel-group">
+                            <div class="col-lg-4 subservice">
+                                <a href="#" class="a-black">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">子业务1</div>
+                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 subservice">
+                                <a href="#" class="a-black">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">子业务1</div>
+                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 subservice">
+                                <a href="#" class="a-black">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">子业务1</div>
+                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 subservice">
+                                <a href="#" class="a-black">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">子业务1</div>
+                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 subservice">
+                                <a href="#" class="a-black">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">子业务1</div>
+                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 subservice">
+                                <a href="#" class="a-black">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">子业务1</div>
+                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 subservice">
+                                <a href="#" class="a-black">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">子业务1</div>
+                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
-
         </div>
     </div>
+
 </div>
 
 <footer class="container-fluid main-container-fluid text-center blue-bg-white-font">
