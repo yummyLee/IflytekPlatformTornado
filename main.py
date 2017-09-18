@@ -216,6 +216,21 @@ class BusinessHandler(BaseHandler):
             self.render("business.html", user=self.current_user)
 
 
+class UploadDocHandler(BaseHandler):
+    def data_received(self, chunk):
+        pass
+
+    @tornado.web.authenticated
+    def get(self, *args, **kwargs):
+
+        param = self.get_argument("param",None)
+        if param is not None:
+            # if param == "business_class":
+            pass
+        else:
+            self.render("upload_doc.html", user=self.current_user)
+
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -225,7 +240,8 @@ class Application(tornado.web.Application):
             (r"/tools", ToolHandler),
             (r"/article", ArticleHandler),
             (r"/add_article", AddArticleHandler),
-            (r"/business", BusinessHandler)
+            (r"/business", BusinessHandler),
+            (r"/upload_doc", UploadDocHandler)
         ]
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
