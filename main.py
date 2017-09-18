@@ -13,7 +13,7 @@ from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8030, help="run on the given port", type=int)
+define("port", default=8009, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -183,20 +183,33 @@ class BusinessHandler(BaseHandler):
                     if match_result:
                         business = col_name.replace("LM.business.", "")
                         results = db.LM.business[business].find()
-                        subservices = []
+                        subservices = {}
                         for r in results:
                             r["_id"] = r["_id"].__str__()
-                            subservices.append(r)
+                            if subservices.__contains__(r["subService"]):
+                                model_type_list = subservices[r["subService"]]
+                                model_type_list.append(r["modelType"])
+                            else:
+                                new = [r["modelType"]]
+                                subservices[r["subService"]] = new
                         print("business = " + business)
-                        print(subservices)
-                        businesses.append({"business": business, "subservices": subservices})
+                        models = []
+                        for k in subservices.keys():
+                            klist = subservices[k]
+                            models.append({"subServiceName": k, "modelTypes": klist})
+                        businesses.append({"business": business, "subservices": models})
                 self.write(json.dumps(businesses))
 
             if param == "get_service_info":
-                business = self.get_argument("business", None)
                 sub_service_name = self.get_argument("sub_service_name", None)
+                model_type = self.get_argument("model_type", None)
+                business = self.get_argument("business", None)
+                print(sub_service_name)
+                print(model_type)
+                print(business)
                 if business is not None and sub_service_name is not None:
-                    results = db.LM.business[business].find_one({"subService": sub_service_name})
+                    results = db.LM.business[business].find_one(
+                        {"subService": sub_service_name, "modelType": model_type})
                     results["_id"] = results["_id"].__str__()
                     self.write(results)
         else:

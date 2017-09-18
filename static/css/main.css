@@ -222,3 +222,7 @@ body .article-item {
 .business-content {
     min-height: 400px !important;
 }
+
+.main-business-item{
+    margin-bottom: 20px;
+}
