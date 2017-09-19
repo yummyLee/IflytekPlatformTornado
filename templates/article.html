@@ -6,11 +6,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
-    <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
     <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
-    <script src="{{static_url('js/bootstrap.js')}}"></script>
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
+    <script src="{{static_url('js/bootstrap.js')}}"></script>
+    <script src="{{static_url('js/myjs.js')}}"></script>
 
 </head>
 
@@ -92,46 +93,11 @@
         </p>
     </footer>
 
-    <script>
-        function getArticles() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (xhttp.readyState === 4 && xhttp.status === 200) {
-                    console.log(xhttp.responseText);
-                    var articles = eval("(" + xhttp.responseText + ")");
-                    for (var i = 0; i < getJsonLength(articles); i++) {
-                        $("#otherTool").append("<a href=\"article?article_id=" + articles[i]._id + "\" class=\"a-black\">\n" +
-                            "<div class=\"panel panel-info\">\n" +
-                            "<div class=\"panel-heading\">" + articles[i].articleTitle + "</div>\n" +
-                            "<div class=\"main-tool-description panel-body\">" + articles[i].articleDescription + "</div>\n" +
-                            "</div>\n" +
-                            "</a>\n")
-                    }
-                }
-            };
-            xhttp.open("GET", "tools.html?param=get_articles&offset=0&limit=3", true);
-            xhttp.send();
-        }
-
-        function getJsonLength(jsonData) {
-            var jsonLength = 0;
-            for (var item in jsonData) {
-                jsonLength++;
-            }
-            return jsonLength;
-        }
-
-        $(document).ready(function () {
-            getArticles();
-        });
-
-    </script>
 
     <script>
 
         var imgs = document.getElementsByTagName("img");
         for (var i = 0; i < imgs.length; i++) {
-            console.log("mmmm");
             imgs[i].className = "article-img";
         }
     </script>

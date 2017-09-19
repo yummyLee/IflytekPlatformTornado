@@ -13,7 +13,7 @@ from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8009, help="run on the given port", type=int)
+define("port", default=8010, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -153,6 +153,11 @@ class AddArticleHandler(BaseHandler):
         description = data_decode['articleDescription'] = base64.b64decode(data_decode['articleDescription']).decode(
             "utf-8")
         title = data_decode['articleTitle'] = base64.b64decode(data_decode['articleTitle']).decode("utf-8")
+
+        if db.article.tools.find_one({"articleTitle": title}) is not None:
+            self.write(json.dumps({"addArticleResponseType": "error", "addArticleResponseTips": "已存在同名文章。。"}))
+            return
+
         writer = data_decode['articleWriter'] = base64.b64decode(data_decode['articleWriter']).decode("utf-8")
         article_class = data_decode['articleClass'] = base64.b64decode(data_decode['articleClass']).decode("utf-8")
         date = data_decode['articleDate']
@@ -161,7 +166,7 @@ class AddArticleHandler(BaseHandler):
         db.article_class.tools.update({"articleClass": article_class}, {'$inc': {"articleClassCount": 1}}, True)
         # self.render("article.html", articleTitle=title, articleContent=content, articleDate=date,
         # articleWriter=writer, articleClass=article_class)
-        self.write(str(article_id))
+        self.write(json.dumps({"addArticleResponseType": "success", "addArticleResponseTips": str(article_id)}))
 
 
 class BusinessHandler(BaseHandler):
@@ -223,7 +228,7 @@ class UploadDocHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
 
-        param = self.get_argument("param",None)
+        param = self.get_argument("param", None)
         if param is not None:
             # if param == "business_class":
             pass

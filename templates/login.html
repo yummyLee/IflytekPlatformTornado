@@ -35,7 +35,7 @@
                     <input id="password" type="password" name="password" class="form-control" placeholder="密码">
                 </div>
                 <!--<div class="checkbox">-->
-                    <!--<label><input type="checkbox">记住我</label>-->
+                <!--<label><input type="checkbox">记住我</label>-->
                 <!--</div>-->
             </form>
             <button id="loginBtn" class="btn btn-info btn-block">登&nbsp;&nbsp;录</button>
@@ -46,41 +46,52 @@
 </div>
 <script>
     $(document).ready(function () {
-        $("#loginBtn").on("click", function () {
-            console.log("login");
-            var _xsrf = $("input[name='_xsrf']").val();
-            $.ajax({
-                url: "/login",
-                type: "POST",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                data: {
-                    'username': $("#username").val(),
-                    'password': $("#password").val(),
-                    '_xsrf': _xsrf
-                },
-                dataType: "text",
-                success: function (result) {
-                    console.log(result);
-                    var response = eval("(" + result + ")");
-                    var type = response.loginResponseType;
-                    var tips = response.loginResponseTips;
-                    if (type === "success") {
-                        toastr.success(tips);
-                        setTimeout(window.location.href = '/', 3000);
-                    } else {
-                        toastr.error(tips);
-                    }
-//                    runCode(result)
-//                    window.location = "article?article_id=" + result;
-                },
-                error: function (msg) {
 
-                }
-            });
+        $(document).keyup(function (event) {
+            if (event.keyCode === 13) {
+                loginToPlatform();
+            }
+        });
+
+        $("#loginBtn").on("click", function () {
+            loginToPlatform();
             return false;
         });
 
     });
+
+    function loginToPlatform() {
+        console.log("login");
+        var _xsrf = $("input[name='_xsrf']").val();
+        $.ajax({
+            url: "/login",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data: {
+                'username': $("#username").val(),
+                'password': $("#password").val(),
+                '_xsrf': _xsrf
+            },
+            dataType: "text",
+            success: function (result) {
+                console.log(result);
+                var response = eval("(" + result + ")");
+                var type = response.loginResponseType;
+                var tips = response.loginResponseTips;
+                if (type === "success") {
+                    toastr.success(tips);
+                    setTimeout(window.location.href = '/', 3000);
+                } else {
+                    toastr.error(tips);
+                }
+//                    runCode(result)
+//                    window.location = "article?article_id=" + result;
+            },
+            error: function (msg) {
+
+            }
+        });
+    }
 </script>
 </body>
 </html>

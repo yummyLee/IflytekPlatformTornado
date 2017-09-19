@@ -193,6 +193,40 @@ $("#toolsContainer").ready(function () {
 });
 
 
+/**
+ * articles.html
+ * @param html
+ */
+
+function getOtherArticles() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            console.log(xhttp.responseText);
+            var articles = eval("(" + xhttp.responseText + ")");
+            for (var i = 0; i < getJsonLength(articles); i++) {
+                $("#otherTool").append("<a href=\"article?article_id=" + articles[i]._id + "\" class=\"a-black\">\n" +
+                    "<div class=\"panel panel-info\">\n" +
+                    "<div class=\"panel-heading\">" + articles[i].articleTitle + "</div>\n" +
+                    "<div class=\"main-tool-description panel-body\">" + articles[i].articleDescription + "</div>\n" +
+                    "</div>\n" +
+                    "</a>\n")
+            }
+            var imgs = document.getElementsByTagName("img");
+            for (var i = 0; i < imgs.length; i++) {
+                imgs[i].className = "article-img";
+            }
+        }
+    };
+    xhttp.open("GET", "tools?param=get_articles&offset=0&limit=3", true);
+    xhttp.send();
+}
+
+$("#otherTool").ready(function () {
+    console.log("文章页面加载完成");
+    getOtherArticles();
+});
+
 function runCode(html) {
     var newwin = window.open('', '', '');
     newwin.opener = null;
@@ -212,16 +246,14 @@ function getNowFormatDate() {
     if (strDate >= 0 && strDate <= 9) {
         strDate = "0" + strDate;
     }
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+    return date.getFullYear() + seperator1 + month + seperator1 + strDate +
         " " + date.getHours() + seperator2 + date.getMinutes() +
         seperator2 + date.getSeconds();
-    return currentdate;
 }
 
-$.base64.utf8encode = true;
 
 $("#addArticleBodyContainer").ready(function () {
-
+    $.base64.utf8encode = true;
     //添加文章页面js
     $("#articleClass").children().children().children().click(function () {
         var articleClassName = this.innerHTML;
@@ -229,11 +261,38 @@ $("#addArticleBodyContainer").ready(function () {
         $("#curArticleClass").html(articleClassName);
     });
 
+    function isAllSpace(string) {
+        if (string === "") return true;
+        var regu = "^[ ]+$";
+        var re = new RegExp(regu);
+        return re.test(string);
+
+    }
+
     $("#submitArticleButton").click(function () {
         var articleContent = $.base64.btoa($("#editor").html());
         var articleDescription = $.base64.btoa($("#articleDescription").val());
         var articleTitle = $.base64.btoa($("#articleTitle").val());
         var articleWriter = $.base64.btoa($("#articleWriter").val());
+
+        var errorinfo = "";
+        if (isAllSpace(articleTitle)) {
+            errorinfo += "文章标题 ";
+        }
+        if (isAllSpace(articleWriter)) {
+            errorinfo += "文章作者 ";
+        }
+        if (isAllSpace(articleDescription)) {
+            errorinfo += "文章描述 ";
+        }
+        if (isAllSpace(articleContent)) {
+            errorinfo += "文章内容 ";
+        }
+        if (errorinfo.length > 0) {
+            toastr.error(errorinfo + "为空");
+            return;
+        }
+
         var articleClass = $.base64.btoa($("#curArticleClass").html());
         console.log(articleClass);
         var articleDate = getNowFormatDate();
@@ -256,8 +315,12 @@ $("#addArticleBodyContainer").ready(function () {
             dataType: "text",
             success: function (result) {
                 console.log(result);
-//                    runCode(result)
-                window.location = "article?article_id=" + result;
+                var response = eval("(" + result + ")");
+                if (response.addArticleResponseType==="success") {
+                    window.location = "article?article_id=" + response.addArticleResponseTips;
+                }else{
+                    toastr.error(response.addArticleResponseTips)
+                }
             },
             error: function (msg) {
 
@@ -329,7 +392,7 @@ $(function () {
  * business.html
  **/
 //业务页面加载左边菜单树
-$("#businessContainer").ready(function () {
+$("#businessBody").ready(function () {
     console.log("business");
     var x = new XMLHttpRequest();
     x.onreadystatechange = function () {
