@@ -13,7 +13,7 @@ from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8010, help="run on the given port", type=int)
+define("port", default=8009, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -109,29 +109,38 @@ class ToolHandler(BaseHandler):
                 article_classes = json.dumps(article_classes)
                 print(article_classes)
                 self.write(article_classes)
+            elif param == "get_html":
+                self.set_header("Content-Type", "text/html")
+                self.render("tools.html", user=self.current_user)
         else:
             self.set_header("Content-Type", "text/html")
-            self.render("tools.html", user=self.current_user)
+            self.render("container.html", user=self.current_user)
 
 
 # 处理文章页面的请求
-class ArticleHandler(tornado.web.RequestHandler):
+class ArticleHandler(BaseHandler):
     def data_received(self, chunk):
         pass
 
     def get(self, *args, **kwargs):
-        article_id = self.get_argument("article_id")
-        print("id = " + article_id)
-        article = db.article.tools.find_one({"_id": ObjectId(str(article_id))})
-        print(article)
-        title = article["articleTitle"]
-        content = article["articleContent"]
-        date = article["articleDate"]
-        desription = article["articleDescription"]
-        writer = article["articleWriter"]
-        article_class = article["articleClass"]
-        self.render("article.html", articleTitle=title, articleContent=content, articleDate=date, articleWriter=writer,
-                    articleClass=article_class)
+        param = self.get_argument("param", None)
+        if param is not None:
+            if param == "get_html":
+                article_id = self.get_argument("article_id")
+                print("id = " + article_id)
+                article = db.article.tools.find_one({"_id": ObjectId(str(article_id))})
+                print(article)
+                title = article["articleTitle"]
+                content = article["articleContent"]
+                date = article["articleDate"]
+                desription = article["articleDescription"]
+                writer = article["articleWriter"]
+                article_class = article["articleClass"]
+                self.render("article.html", articleTitle=title, articleContent=content, articleDate=date,
+                            articleWriter=writer,
+                            articleClass=article_class)
+        else:
+            self.render("container.html", user=self.current_user)
 
 
 class AddArticleHandler(BaseHandler):
@@ -142,7 +151,12 @@ class AddArticleHandler(BaseHandler):
     def get(self, *args, **kwargs):
         print("got request")
         self.set_header("Content-Type", "text/html")
-        self.render("add_article.html", user=self.current_user)
+        param = self.get_argument("param", None)
+        if param is not None:
+            if param == "get_html":
+                self.render("add_article.html", user=self.current_user)
+        else:
+            self.render("container.html", user=self.current_user)
 
     def post(self, *args, **kwargs):
         data = self.request.body
@@ -205,7 +219,7 @@ class BusinessHandler(BaseHandler):
                         businesses.append({"business": business, "subservices": models})
                 self.write(json.dumps(businesses))
 
-            if param == "get_service_info":
+            elif param == "get_service_info":
                 sub_service_name = self.get_argument("sub_service_name", None)
                 model_type = self.get_argument("model_type", None)
                 business = self.get_argument("business", None)
@@ -217,8 +231,11 @@ class BusinessHandler(BaseHandler):
                         {"subService": sub_service_name, "modelType": model_type})
                     results["_id"] = results["_id"].__str__()
                     self.write(results)
+
+            elif param == "get_html":
+                self.render("business.html", user=self.current_user)
         else:
-            self.render("business.html", user=self.current_user)
+            self.render("container.html", user=self.current_user)
 
 
 class UploadDocHandler(BaseHandler):

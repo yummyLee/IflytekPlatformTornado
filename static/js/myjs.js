@@ -48,31 +48,31 @@ $("#indexContainer").ready(function () {
         x.send();
     });
 
-    // Add smooth scrolling to all links in navbar + footer link
-    $(".navbar a, footer a[href='#myPage']").on('click', function (event) {
-        // Prevent default anchor click behavior
-        event.preventDefault();
-        // Store hash
-        var hash = this.hash;
-        // Using jQuery's animate() method to add smooth page scroll
-        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-        $('html, body').animate({
-            scrollTop: $(hash).offset().top
-        }, 900, function () {
-            // Add hash (#) to URL when done scrolling (default click behavior)
-            window.location.hash = hash;
-        });
-    });
-
-    $(window).scroll(function () {
-        $(".slideanim").each(function () {
-            var pos = $(this).offset().top;
-            var winTop = $(window).scrollTop();
-            if (pos < winTop + 600) {
-                $(this).addClass("slide");
-            }
-        });
-    });
+    // // Add smooth scrolling to all links in navbar + footer link
+    // $(".navbar a, footer a[href='#containerPage]").on('click', function (event) {
+    //     // Prevent default anchor click behavior
+    //     event.preventDefault();
+    //     // Store hash
+    //     var hash = this.hash;
+    //     // Using jQuery's animate() method to add smooth page scroll
+    //     // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+    //     $('html, body').animate({
+    //         scrollTop: $(hash).offset().top
+    //     }, 900, function () {
+    //         // Add hash (#) to URL when done scrolling (default click behavior)
+    //         window.location.hash = hash;
+    //     });
+    // });
+    //
+    // $(window).scroll(function () {
+    //     $(".slideanim").each(function () {
+    //         var pos = $(this).offset().top;
+    //         var winTop = $(window).scrollTop();
+    //         if (pos < winTop + 600) {
+    //             $(this).addClass("slide");
+    //         }
+    //     });
+    // });
 
 
     // $("#goToTools").click(function () {
@@ -104,6 +104,62 @@ function getBusiness() {
     x.open("GET", "/")
 
 }
+
+
+/**
+ * container.html加载
+ */
+
+function loadContainerPages(pageName, params) {
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function () {
+        if (x.readyState === 4 && x.status === 200) {
+            var pageContainerName;
+            switch (pageName) {
+                case "tools":
+                    pageContainerName = "toolsBodyContainer";
+                    break;
+                case "add_article":
+                    pageContainerName = "addArticleBodyContainer";
+                    break;
+                case "article":
+                    pageContainerName = "articleContainer";
+                    break;
+                case "business":
+                    pageContainerName = "businessContainer";
+                    break;
+                default:
+                    pageContainerName = "/";
+            }
+
+            var html = new DOMParser().parseFromString(x.responseText, "text/html").getElementById(pageContainerName);
+            console.log(html);
+            $("#contentContainer").html(html.outerHTML);
+            window.history.replaceState("", "", "/" + pageName + "?" + params);
+
+            console.log("pageName = " + pageName);
+            if (pageName === "tools") {
+                getPageInfo(PAGE_NUM, ARTICLE_CLASS);
+                getArticleClassInfo();
+            } else if (pageName === "article") {
+                getOtherArticles();
+            } else if (pageName === "add_article") {
+                addArticleReady();
+            } else if (pageName === "business") {
+                console.log("business")
+                businessReady();
+            }
+        }
+    };
+    var url = "/" + pageName + "?param=get_html";
+    if (params.length > 0) {
+        url += ("&" + params);
+    }
+    x.open("GET", url, true);
+    x.send();
+
+}
+
 
 /**
  * tools.html
@@ -173,18 +229,25 @@ function getPageInfo(page_num, article_class) {
     xhttp.send();
 }
 
-$("#toolsContainer").ready(function () {
-    getPageInfo(PAGE_NUM, ARTICLE_CLASS);
-    getArticleClassInfo();
-    // $("#addArticleBtn").click(function () {
+$("#contentContainer").ready(function () {
+
+    var path = window.location.pathname;
+    var params = window.location.search;
+    console.log("$(\"#contentContainer\").ready");
+    console.log("path = " + path);
+    loadContainerPages(path.replace("/", ""), params.replace("?", ""));
+
+    // $("#addArticleLink").click(function () {
     //     var x = new XMLHttpRequest();
     //     x.overrideMimeType("text/html");
     //     x.onreadystatechange = function () {
     //         if (x.readyState === 4 && x.status === 200) {
-    //             console.log(x.responseText);
+    //             // console.log(x.responseText);
     //             var html = new DOMParser().parseFromString(x.responseText, "text/html").getElementById("addArticleBodyContainer");
     //             console.log(html);
-    //             $("#toolsBodyContainer").innerHTML = html.outerHTML;
+    //             $("#contentContainer").html(html.outerHTML);
+    //             addArticleReady();
+    //             window.history.replaceState("", "", "/add_article");
     //         }
     //     };
     //     x.open("GET", "add_article", true);
@@ -199,10 +262,11 @@ $("#toolsContainer").ready(function () {
  */
 
 function getOtherArticles() {
+    console.log("getOtherArticles()");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            console.log(xhttp.responseText);
+            // console.log(xhttp.responseText);
             var articles = eval("(" + xhttp.responseText + ")");
             for (var i = 0; i < getJsonLength(articles); i++) {
                 $("#otherTool").append("<a href=\"article?article_id=" + articles[i]._id + "\" class=\"a-black\">\n" +
@@ -222,10 +286,6 @@ function getOtherArticles() {
     xhttp.send();
 }
 
-$("#otherTool").ready(function () {
-    console.log("文章页面加载完成");
-    getOtherArticles();
-});
 
 function runCode(html) {
     var newwin = window.open('', '', '');
@@ -252,13 +312,16 @@ function getNowFormatDate() {
 }
 
 
-$("#addArticleBodyContainer").ready(function () {
+function addArticleReady() {
+
+    console.log("addArticleBodyContainer ready");
+
     $.base64.utf8encode = true;
     //添加文章页面js
     $("#articleClass").children().children().children().click(function () {
         var articleClassName = this.innerHTML;
         console.log(articleClassName);
-        $("#curArticleClass").html(articleClassName);
+        $("#curArticleClass").find(">span").html(articleClassName);
     });
 
     function isAllSpace(string) {
@@ -316,9 +379,9 @@ $("#addArticleBodyContainer").ready(function () {
             success: function (result) {
                 console.log(result);
                 var response = eval("(" + result + ")");
-                if (response.addArticleResponseType==="success") {
+                if (response.addArticleResponseType === "success") {
                     window.location = "article?article_id=" + response.addArticleResponseTips;
-                }else{
+                } else {
                     toastr.error(response.addArticleResponseTips)
                 }
             },
@@ -327,77 +390,78 @@ $("#addArticleBodyContainer").ready(function () {
             }
         });
         return true;
-    })
-});
-
-$(function () {
-    function initToolbarBootstrapBindings() {
-        var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                'Times New Roman', 'Verdana'
-            ],
-            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-        $.each(fonts, function (idx, fontName) {
-            fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-        });
-        $('a[title]').tooltip({
-            container: 'body'
-        });
-        $('.dropdown-menu input').click(function () {
-            return false;
-        })
-            .change(function () {
-                $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-            })
-            .keydown('esc', function () {
-                this.value = '';
-                $(this).change();
-            });
-
-        $('[data-role=magic-overlay]').each(function () {
-            var overlay = $(this),
-                target = $(overlay.data('target'));
-            overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-        });
-        if ("onwebkitspeechchange" in document.createElement("input")) {
-            var editorOffset = $('#editor').offset();
-            $('#voiceBtn').css('position', 'absolute').offset({
-                top: editorOffset.top,
-                left: editorOffset.left + $('#editor').innerWidth() - 35
-            });
-        } else {
-            $('#voiceBtn').hide();
-        }
-    }
-
-    function showErrorAlert(reason, detail) {
-        var msg = '';
-        if (reason === 'unsupported-file-type') {
-            msg = "Unsupported format " + detail;
-        } else {
-            console.log("error uploading file", reason, detail);
-        }
-        $('<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>' +
-            '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
-    }
-
-    initToolbarBootstrapBindings();
-    $('#editor').wysiwyg({
-        fileUploadError: showErrorAlert
     });
-    window.prettyPrint && prettyPrint();
-});
+
+
+    $(function () {
+        function initToolbarBootstrapBindings() {
+            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                    'Times New Roman', 'Verdana'
+                ],
+                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            $.each(fonts, function (idx, fontName) {
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+            });
+            $('a[title]').tooltip({
+                container: 'body'
+            });
+            $('.dropdown-menu input').click(function () {
+                return false;
+            })
+                .change(function () {
+                    $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+                })
+                .keydown('esc', function () {
+                    this.value = '';
+                    $(this).change();
+                });
+
+            $('[data-role=magic-overlay]').each(function () {
+                var overlay = $(this),
+                    target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+            if ("onwebkitspeechchange" in document.createElement("input")) {
+                var editorOffset = $('#editor').offset();
+                $('#voiceBtn').css('position', 'absolute').offset({
+                    top: editorOffset.top,
+                    left: editorOffset.left + $('#editor').innerWidth() - 35
+                });
+            } else {
+                $('#voiceBtn').hide();
+            }
+        }
+
+        function showErrorAlert(reason, detail) {
+            var msg = '';
+            if (reason === 'unsupported-file-type') {
+                msg = "Unsupported format " + detail;
+            } else {
+                console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        }
+
+        initToolbarBootstrapBindings();
+        $('#editor').wysiwyg({
+            fileUploadError: showErrorAlert
+        });
+        window.prettyPrint && prettyPrint();
+    });
+}
 
 /**
  * business.html
  **/
 //业务页面加载左边菜单树
-$("#businessBody").ready(function () {
-    console.log("business");
+function businessReady() {
+    console.log("businessBody");
     var x = new XMLHttpRequest();
     x.onreadystatechange = function () {
         if (x.readyState === 4 && x.status === 200) {
-            console.log(x.responseText);
+            // console.log(x.responseText);
             var businesses = eval("(" + x.responseText + ")")
             for (var i = 0; i < getJsonLength(businesses); i++) {
                 $("#businessClassList").append(
@@ -437,7 +501,7 @@ $("#businessBody").ready(function () {
     };
     x.open("GET", "?param=business_class", true);
     x.send();
-});
+}
 
 //加载子业务信息
 function getSubServiceInfo(pInfo) {
@@ -467,8 +531,8 @@ function getSubServiceInfo(pInfo) {
                 if (ii !== "_id") {
                     $("#subServiceTableBody").append(
                         `<tr>
-                        <td class="col-lg-4 text-center">${ii}</td>
-                        <td class="col-lg-8 text-center">${ii_content}</td>
+                        <td class="col-lg-3 text-center"><span class="label label-info">${ii}</span></td>
+                        <td class="col-lg-9 text-center">${ii_content}</td>
                     </tr>`)
                 }
             }
