@@ -7,24 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="{{static_url('external/google-code-prettify/prettify.css')}}" rel="stylesheet">
+    <link href="{{ static_url('external/google-code-prettify/prettify.css') }}" rel="stylesheet">
     <!--<link href="{{static_url('css/bootstrap-combined.no-icons.min.css')}}" rel="stylesheet">-->
     <!--<link href="{{static_url('css/bootstrap-responsive.min.css')}}" rel="stylesheet">-->
-    <link href="{{static_url('css/font-awesome.css')}}" rel="stylesheet">
-    <link href="{{static_url('css/toastr.min.css')}}" rel="stylesheet">
-    <link href="{{static_url('css/index.css')}}" rel="stylesheet">
-    <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ static_url('css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/index.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
+    <link rel="stylesheet" href="{{ static_url('css/main.css') }}"/>
 
-    <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
-    <script src="{{static_url('external/jquery.hotkeys.js')}}"></script>
-    <script src="{{static_url('js/bootstrap.js')}}"></script>
-    <script src="{{static_url('external/google-code-prettify/prettify.js')}}"></script>
-    <script src="{{static_url('js/bootstrap-wysiwyg.js')}}"></script>
-    <script src="{{static_url('js/jquery.base64.js')}}"></script>
-    <script src="{{static_url('js/myjs.js')}}"></script>
-    <script src="{{static_url('js/toastr.min.js')}}"></script>
+    <script src="{{ static_url('js/jquery-3.2.1.js') }}"></script>
+    <script src="{{ static_url('external/jquery.hotkeys.js') }}"></script>
+    <script src="{{ static_url('js/bootstrap.js') }}"></script>
+    <script src="{{ static_url('external/google-code-prettify/prettify.js') }}"></script>
+    <script src="{{ static_url('js/bootstrap-wysiwyg.js') }}"></script>
+    <script src="{{ static_url('js/jquery.base64.js') }}"></script>
+    <script src="{{ static_url('js/myjs.js') }}"></script>
+    <script src="{{ static_url('js/toastr.min.js') }}"></script>
 
 </head>
 
@@ -39,15 +39,11 @@
             <ul class="nav navbar-nav navbar-default navbar-fixed-top navbar-container">
                 <li><a href="/">首页</a></li>
                 <li><a href="/tools">常用工具</a></li>
-                <li><a href="#">语言模型</a></li>
-                <li><a href="#">声学模型</a></li>
-                <li><a href="#">相关文档</a></li>
                 <li><a href="/business">相关业务</a></li>
-                <li><a href="#">帮助</a></li>
                 <li><a id="addArticleLink" href="/add_article">撰文</a></li>
-                <li><a id="/upload_doc">传文</a></li>
+                <li><a href="/upload_doc">传文</a></li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user}}<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a id="userInfo" href="#">个人信息</a></li>
                         <li><a id="userModifyPassword" href="#">修改密码</a></li>
@@ -56,7 +52,6 @@
                     </ul>
                 </li>
             </ul>
-
 
         </div>
     </nav>
@@ -92,32 +87,6 @@
         <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
     </p>
 </footer>
-
-
-<!--<footer class="container-fluid main-container-fluid text-center">-->
-    <!--<div class="row">-->
-        <!--<a href="#containerPage" class="col-lg-12" title="To Top">-->
-            <!--<span class="glyphicon glyphicon-chevron-up"></span>-->
-        <!--</a>-->
-    <!--</div>-->
-    <!--<div class="row text-center">-->
-        <!--<div class="col-sm-3"></div>-->
-        <!--<div class="col-sm-2">-->
-            <!--<a href="#" title="查看隐私政策">隐私政策</a>-->
-        <!--</div>-->
-        <!--<div class="col-sm-2">-->
-            <!--<a href="#" title="查看平台信息">平台信息</a>-->
-        <!--</div>-->
-        <!--<div class="col-sm-2">-->
-            <!--<a href="#" title="查看免责声明">免责声明</a>-->
-        <!--</div>-->
-        <!--<div class="col-sm-3"></div>-->
-    <!--</div>-->
-    <!--<br>-->
-    <!--<p>Presented by-->
-        <!--<a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>-->
-    <!--</p>-->
-<!--</footer>-->
 
 
 </body>
