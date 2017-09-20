@@ -15,94 +15,78 @@
 
 </head>
 
-<body id="articlePage" class="article-page-bg">
+<body id="articlePage">
 
-<div class="container-fluid thumbnail article-page-main">
+<div id="articleContainer"  class="article-page-bg">
 
-    <div id="row">
-        <h1><b>语言模型数据管理平台</b></h1>
-        <h4 class="article-page-site-description">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;——让世界聆听我们的声音</h4>
-        <ul class="nav nav-pills article-nav">
-            <li>
-                <a href="/">首页</a>
-            </li>
-            <li>
-                <a href="tools">常用工具</a>
-            </li>
-            <li>
-                <a href="#">语言模型</a>
-            </li>
-            <li>
-                <a href="#">声学模型</a>
-            </li>
-            <li>
-                <a href="#">相关文档</a>
-            </li>
-            <li>
-                <a href="#">相关业务</a>
-            </li>
-            <li>
-                <a href="#">帮助</a>
-            </li>
-        </ul>
+    <div class="container-fluid thumbnail article-page-main">
+
+        <div id="row">
+            <h1><b>语言模型数据管理平台</b></h1>
+            <h4 class="article-page-site-description">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;——让世界聆听我们的声音</h4>
+            <ul class="nav nav-pills article-nav">
+
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 article-page-main">
+                <article>
+                    <header>
+                        <h2 class="text-center"><b>{{articleTitle}}</b></h2>
+                        <h4 class="text-center">
+                            <small>作者：{{articleWriter}}</small>&emsp;<small>日期：{{articleDate}}</small>&emsp;<small>
+                            类别：{{articleClass}}
+                        </small>
+                        </h4>
+                    </header>
+                    <div class="article-content">{{articleContent}}</div>
+                </article>
+            </div>
+
+            <div class="col-lg-4 article-page-aside">
+                <h2>其他工具</h2>
+                <div id="otherTool">
+
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+
+            var imgs = document.getElementsByTagName("img");
+            for (var i = 0; i < imgs.length; i++) {
+                imgs[i].className = "article-img";
+            }
+        </script>
+
     </div>
-
-    <div class="row">
-        <div class="col-lg-8 article-page-main">
-            <article>
-                <header>
-                    <h2 class="text-center"><b>{{articleTitle}}</b></h2>
-                    <h4 class="text-center">
-                        <small>作者：{{articleWriter}}</small>&emsp;<small>日期：{{articleDate}}</small>&emsp;<small>
-                        类别：{{articleClass}}
-                    </small>
-                    </h4>
-                </header>
-                <div class="article-content">{{articleContent}}</div>
-            </article>
-        </div>
-
-        <div class="col-lg-4 article-page-aside">
-            <h2>其他工具</h2>
-            <div id="otherTool">
-
-            </div>
-        </div>
-    </div>
-
-    <footer class="container-fluid main-container-fluid text-center">
-        <a href="#articlePage" title="To Top">
-            <span class="glyphicon glyphicon-chevron-up"></span>
-        </a>
-        <div class="row text-center">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-2">
-                <a href="#" title="查看隐私政策">隐私政策</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" title="查看平台信息">平台信息</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" title="查看免责声明">免责声明</a>
-            </div>
-            <div class="col-sm-3"></div>
-        </div>
-        <br>
-        <p>Presented by
-            <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
-        </p>
-    </footer>
-
-
-    <script>
-
-        var imgs = document.getElementsByTagName("img");
-        for (var i = 0; i < imgs.length; i++) {
-            imgs[i].className = "article-img";
-        }
-    </script>
 
 </div>
+
+<footer class="container-fluid main-container-fluid text-center">
+    <a href="#articlePage" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+    <div class="row text-center">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+            <a href="#" title="查看隐私政策">隐私政策</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看平台信息">平台信息</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#" title="查看免责声明">免责声明</a>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <br>
+    <p>Presented by
+        <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
+    </p>
+</footer>
 
 </body>
 

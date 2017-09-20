@@ -16,19 +16,20 @@
     <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="{{static_url('css/main.css')}}"/>
+
     <script src="{{static_url('js/jquery-3.2.1.js')}}"></script>
     <script src="{{static_url('external/jquery.hotkeys.js')}}"></script>
     <script src="{{static_url('js/bootstrap.js')}}"></script>
     <script src="{{static_url('external/google-code-prettify/prettify.js')}}"></script>
-
     <script src="{{static_url('js/bootstrap-wysiwyg.js')}}"></script>
-
     <script src="{{static_url('js/jquery.base64.js')}}"></script>
     <script src="{{static_url('js/myjs.js')}}"></script>
     <script src="{{static_url('js/toastr.min.js')}}"></script>
+
 </head>
 
 <body id="containerPage">
+
 <header>
     <nav class="navbar">
         <div class="container-fluid">
@@ -37,7 +38,13 @@
             </div>
             <ul class="nav navbar-nav navbar-default navbar-fixed-top navbar-container">
                 <li><a href="/">首页</a></li>
-                <li><a id="addArticleLink">撰文</a></li>
+                <li><a href="/tools">常用工具</a></li>
+                <li><a href="#">语言模型</a></li>
+                <li><a href="#">声学模型</a></li>
+                <li><a href="#">相关文档</a></li>
+                <li><a href="/business">相关业务</a></li>
+                <li><a href="#">帮助</a></li>
+                <li><a id="addArticleLink" href="/add_article">撰文</a></li>
                 <li><a id="uploadDocLink">传文</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user}}<span class="caret"></span></a>
@@ -48,82 +55,18 @@
                         <li><a id="userLogout" href="#">退出登录</a></li>
                     </ul>
                 </li>
-
             </ul>
+
+
         </div>
     </nav>
 </header>
 
+<div id="contentContainer" class="blue-color">
 
-<div id="toolsBodyContainer">
-    <!--搜索栏-->
-    <div class="jumbotron jumbotron-small text-center">
-        <h1>常用工具</h1>
-        <form class="form-inline">
-            <input type="search" class="form-control" size="50" placeholder="需要搜索的内容…">
-            <button type="button" class="btn btn-info">搜索</button>
-        </form>
-    </div>
 
-    <!--文章列表和文章分类列表-->
-    <div class="container-fluid tools-list-bg">
-        <div id="row">
-
-            <!--文章列表-->
-            <div class="col-lg-9">
-                <div id="tool-class-list" class="list-group">
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-8">
-                        <ul class="pager">
-                            <li class="previous"><a onclick="prePage()">Previous</a></li>
-                            <li class="next"><a onclick="nextPage()">Next</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2"></div>
-                </div>
-            </div>
-
-            <!--文章分类列表-->
-            <div class="col-lg-3">
-                <div class="panel panel-info">
-                    <div class="panel-heading">工具分类</div>
-                    <div id="article_class_list" class="list-group">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 </div>
 
-
-<!--<footer class="container-fluid main-container-fluid text-center">-->
-<!--<div class="row">-->
-<!--<a href="#containerPage" class="col-lg-12" title="To Top">-->
-<!--<span class="glyphicon glyphicon-chevron-up"></span>-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="row text-center">-->
-<!--<div class="col-sm-3"></div>-->
-<!--<div class="col-sm-2">-->
-<!--<a href="#" title="查看隐私政策">隐私政策</a>-->
-<!--</div>-->
-<!--<div class="col-sm-2">-->
-<!--<a href="#" title="查看平台信息">平台信息</a>-->
-<!--</div>-->
-<!--<div class="col-sm-2">-->
-<!--<a href="#" title="查看免责声明">免责声明</a>-->
-<!--</div>-->
-<!--<div class="col-sm-3"></div>-->
-<!--</div>-->
-<!--<br>-->
-<!--<p>Presented by-->
-<!--<a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>-->
-<!--</p>-->
-<!--</footer>-->
 
 <footer class="container-fluid main-container-fluid text-center blue-bg-white-font">
     <div class="row">
@@ -149,6 +92,33 @@
         <a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>
     </p>
 </footer>
+
+
+<!--<footer class="container-fluid main-container-fluid text-center">-->
+    <!--<div class="row">-->
+        <!--<a href="#containerPage" class="col-lg-12" title="To Top">-->
+            <!--<span class="glyphicon glyphicon-chevron-up"></span>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="row text-center">-->
+        <!--<div class="col-sm-3"></div>-->
+        <!--<div class="col-sm-2">-->
+            <!--<a href="#" title="查看隐私政策">隐私政策</a>-->
+        <!--</div>-->
+        <!--<div class="col-sm-2">-->
+            <!--<a href="#" title="查看平台信息">平台信息</a>-->
+        <!--</div>-->
+        <!--<div class="col-sm-2">-->
+            <!--<a href="#" title="查看免责声明">免责声明</a>-->
+        <!--</div>-->
+        <!--<div class="col-sm-3"></div>-->
+    <!--</div>-->
+    <!--<br>-->
+    <!--<p>Presented by-->
+        <!--<a href="http://www.iflytek.com" title="ifytek">www.iflytek.com</a>-->
+    <!--</p>-->
+<!--</footer>-->
+
 
 </body>
 
