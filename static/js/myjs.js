@@ -146,7 +146,7 @@ function loadContainerPages(pageName, params) {
             } else if (pageName === "add_article") {
                 addArticleReady();
             } else if (pageName === "business") {
-                console.log("business")
+                console.log("business");
                 businessReady();
             }
         }

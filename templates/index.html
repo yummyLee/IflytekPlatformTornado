@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>语言模型数据管理平台</title>
+    <title>讯飞识别组数据管理平台</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -40,17 +40,17 @@
                     <li>
                         <a href="#tool">常用工具</a>
                     </li>
+{#                    <li>#}
+{#                        <a href="#lmodel">语言模型</a>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                        <a href="#smodel">声学模型</a>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                        <a href="#doc">相关文档</a>#}
+{#                    </li>#}
                     <li>
-                        <a href="#lmodel">语言模型</a>
-                    </li>
-                    <li>
-                        <a href="#smodel">声学模型</a>
-                    </li>
-                    <li>
-                        <a href="#doc">相关文档</a>
-                    </li>
-                    <li>
-                        <a href="#business">相关业务</a>
+                        <a href="#business">当前业务</a>
                     </li>
                     <li>
                         <a href="#help">帮助</a>
@@ -67,136 +67,37 @@
 
         <!--搜索栏-->
         <div class="jumbotron text-center">
-            <h1>语言模型数据管理平台</h1>
+            <h1>识别组数据管理平台</h1>
             <p>让世界聆听我们的声音</p>
             <form class="form-inline">
-                <input type="search" class="form-control" size="50" placeholder="需要搜索的内容…">
+                <input type="search" class="form-control" size="50" placeholder="文档、数据搜索">
                 <button type="button" class="btn btn-info">搜索</button>
             </form>
         </div>
 
         <!--常用工具-->
-        <div id="tool" class="container-fluid main-container-fluid">
+        <div id="tool" class="container-fluid main-container-fluid text-center">
             <!--<h2>常用工具<span><a href="#" class="normal-font" title="查看更多工具">更多>></a></span></h2>-->
             <a id="goToTools" href="/tools" class="a-black" title="查看更多工具">
-                <h2>常用工具</h2></a>
-            <h4>选择一个适合你的工具</h4>
+                <h2>常用工具</h2></a><br />
+            <h4>当前浏览最多的工具</h4>
 
             <!--首页展示的三个工具-->
             <div id="mainToolList" class="row">
 
             </div>
 
-            <a href="#" class="a-black" title="查看相关资源">
-                <h2>相关资源</h2></a>
-            <p><strong>链接:</strong>
-                <a href="#">资源库</a>
-            </p>
-            <p><strong>最后更新日期:</strong> 2017年 08月 29日</p>
+{#            <a href="#" class="a-black" title="查看相关资源">#}
+{#                <h2>相关资源</h2></a>#}
+{#            <p><strong>链接:</strong>#}
+{#                <a href="/tools">资源库</a>#}
+{#            </p>#}
+{#            <p><strong>最后更新日期:</strong> 2017年 08月 29日</p>#}
         </div>
 
-        <div id="lmodel" class="container-fluid main-container-fluid bg-grey">
-            <a href="#" class="a-black" title="查看语言模型">
-                <h2>语言模型</h2></a>
-            <div class="row main-row">
-                <div class="col-sm-8">
-                    <h3>训练数据</h3>
-                    <p>训练数据描述，训练数据描述，训练数据描述，训练数据描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>
-                    <button class="btn btn-default btn-lg">获取数据</button>
-                </div>
-                <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-signal logo"></span>
-                </div>
-            </div>
-
-            <div class="row main-row">
-                <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-globe logo"></span>
-                </div>
-                <div class="col-sm-8">
-                    <h3>训练文档</h3>
-                    <p>训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>
-                    <button class="btn btn-default btn-lg">获取文档</button>
-                </div>
-
-            </div>
-        </div>
-
-        <div id="smodel" class="container-fluid main-container-fluid">
-            <a href="#" class="a-black" title="查看声学模型">
-                <h2>声学模型</h2></a>
-            <div>
-                <div>
-                    <h3>训练数据1</h3>
-                    <p>训练数据描述，训练数据描述，训练数据描述，训练数据描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>
-                    <button class="btn btn-default btn-md">获取数据</button>
-                </div>
-            </div>
-
-            <div>
-                <div>
-                    <h3>训练数据2</h3>
-                    <p>训练数据描述，训练数据描述，训练数据描述，训练数据描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>
-                    <button class="btn btn-default btn-md">获取数据</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="doc" class="container-fluid main-container-fluid bg-grey">
-            <div class="text-center">
-                <a href="#" class="a-black" title="查看更多文档">
-                    <h2>相关文档</h2></a>
-                <h4>选择一篇文档</h4>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <a href="tool1" class="a-black">
-                        <div class="panel panel-info text-center">
-                            <div class="panel-heading">
-                                <h3>文档1</h3>
-                            </div>
-                            <div class="panel-body">
-                                <p><strong>作者：</strong> Lorem</p>
-                                <p><strong>最后修改：</strong> Ipsum</p>
-                                <p><strong>类型：</strong> Dolor</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="tool1" class="a-black">
-                        <div class="panel panel-info text-center">
-                            <div class="panel-heading">
-                                <h3>文档1</h3>
-                            </div>
-                            <div class="panel-body">
-                                <p><strong>作者：</strong> Lorem</p>
-                                <p><strong>最后修改：</strong> Ipsum</p>
-                                <p><strong>类型：</strong> Dolor</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="tool1" class="a-black">
-                        <div class="panel panel-info text-center">
-                            <div class="panel-heading">
-                                <h3>文档1</h3>
-                            </div>
-                            <div class="panel-body">
-                                <p><strong>作者：</strong> Lorem</p>
-                                <p><strong>最后修改：</strong> Ipsum</p>
-                                <p><strong>类型：</strong> Dolor</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div id="business" class="container-fluid main-container-fluid text-center">
+        <div id="business" class="container-fluid main-container-fluid text-center bg-grey">
             <a href="/business" class="a-black" title="查看更多业务">
-                <h2>相关业务</h2></a>
+                <h2>当前业务</h2></a><br />
             <h4>业务概述，业务概述，业务概述，业务概述。</h4>
             <div id="mainBusinessContainer" class="row">
                 <div class="main-business-item col-sm-4">
@@ -244,6 +145,104 @@
                 </div>
             </div>
         </div>
+{#        <div id="lmodel" class="container-fluid main-container-fluid bg-grey">#}
+{#            <a href="#" class="a-black" title="查看语言模型">#}
+{#                <h2>语言模型</h2></a>#}
+{#            <div class="row main-row">#}
+{#                <div class="col-sm-8">#}
+{#                    <h3>训练数据</h3>#}
+{#                    <p>训练数据描述，训练数据描述，训练数据描述，训练数据描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>#}
+{#                    <button class="btn btn-default btn-lg">获取数据</button>#}
+{#                </div>#}
+{#                <div class="col-sm-4">#}
+{#                    <span class="glyphicon glyphicon-signal logo"></span>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="row main-row">#}
+{#                <div class="col-sm-4">#}
+{#                    <span class="glyphicon glyphicon-globe logo"></span>#}
+{#                </div>#}
+{#                <div class="col-sm-8">#}
+{#                    <h3>训练文档</h3>#}
+{#                    <p>训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>#}
+{#                    <button class="btn btn-default btn-lg">获取文档</button>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div id="smodel" class="container-fluid main-container-fluid">#}
+{#            <a href="#" class="a-black" title="查看声学模型">#}
+{#                <h2>声学模型</h2></a>#}
+{#            <div>#}
+{#                <div>#}
+{#                    <h3>训练数据1</h3>#}
+{#                    <p>训练数据描述，训练数据描述，训练数据描述，训练数据描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>#}
+{#                    <button class="btn btn-default btn-md">获取数据</button>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div>#}
+{#                <div>#}
+{#                    <h3>训练数据2</h3>#}
+{#                    <p>训练数据描述，训练数据描述，训练数据描述，训练数据描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。训练文档描述，训练文档描述，训练文档描述，训练文档描述。</p>#}
+{#                    <button class="btn btn-default btn-md">获取数据</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+{#        <div id="doc" class="container-fluid main-container-fluid bg-grey">#}
+{#            <div class="text-center">#}
+{#                <a href="#" class="a-black" title="查看更多文档">#}
+{#                    <h2>相关文档</h2></a>#}
+{#                <h4>选择一篇文档</h4>#}
+{#            </div>#}
+{#            <div class="row">#}
+{#                <div class="col-sm-4">#}
+{#                    <a href="tool1" class="a-black">#}
+{#                        <div class="panel panel-info text-center">#}
+{#                            <div class="panel-heading">#}
+{#                                <h3>文档1</h3>#}
+{#                            </div>#}
+{#                            <div class="panel-body">#}
+{#                                <p><strong>作者：</strong> Lorem</p>#}
+{#                                <p><strong>最后修改：</strong> Ipsum</p>#}
+{#                                <p><strong>类型：</strong> Dolor</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col-sm-4">#}
+{#                    <a href="tool1" class="a-black">#}
+{#                        <div class="panel panel-info text-center">#}
+{#                            <div class="panel-heading">#}
+{#                                <h3>文档1</h3>#}
+{#                            </div>#}
+{#                            <div class="panel-body">#}
+{#                                <p><strong>作者：</strong> Lorem</p>#}
+{#                                <p><strong>最后修改：</strong> Ipsum</p>#}
+{#                                <p><strong>类型：</strong> Dolor</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col-sm-4">#}
+{#                    <a href="tool1" class="a-black">#}
+{#                        <div class="panel panel-info text-center">#}
+{#                            <div class="panel-heading">#}
+{#                                <h3>文档1</h3>#}
+{#                            </div>#}
+{#                            <div class="panel-body">#}
+{#                                <p><strong>作者：</strong> Lorem</p>#}
+{#                                <p><strong>最后修改：</strong> Ipsum</p>#}
+{#                                <p><strong>类型：</strong> Dolor</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
 
         <div id=help class="container-fluid main-container-fluid bg-grey">
             <a href="#" class="a-black" title="查看更多帮助">
