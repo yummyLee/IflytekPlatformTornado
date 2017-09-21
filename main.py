@@ -269,8 +269,60 @@ class OpenFileHandler(tornado.web.RequestHandler):
 
     def get(self, *args, **kwargs):
         file_name = self.get_argument("file_name", None)
+        if os.path.isdir(file_name):
+            self.write(json.dumps(os.listdir(file_name)))
+            return
         if file_name is not None:
             self.write(json.dumps(read_big_file(file_name)))
+
+
+def is_lists_inter(list1, list2):
+    for item1 in list1:
+        for item2 in list2:
+            if item1 == item2:
+                return True
+    return False
+
+
+def get_content_related_to_category(search_content):
+    keywords = search_content.split(" ")
+    db_collections = db.collection_names()
+    file_list = []
+    file_set = set()
+    for col_name in db_collections:
+        match_result = re.match(r"LM\.business\..*?", col_name)
+        if match_result:
+            business = col_name.replace("LM.business.", "")
+            results = db.LM.business[business].find()
+            for r in results:
+                categories = r["corpus"]
+                if is_lists_inter(keywords, categories):
+                    if "useCorpus" in r:
+                        for use in r["useCorpus"]:
+                            if use not in file_set:
+                                file_list.append({"corpus_file_name": use, "business_name": business})
+                                file_set.add(use)
+                    else:
+                        for m_dir in r["corpusPlace"]:
+                            dir_file_list = os.listdir(m_dir)
+                            for dir_file in dir_file_list:
+                                if use not in file_set:
+                                    file_list.append({"corpus_file_name": dir_file, "business_name": business})
+                                    file_set.add(use)
+    return file_list
+
+
+class SearchHandler(tornado.web.RequestHandler):
+    def data_received(self, chunk):
+        pass
+
+    def get(self, *args, **kwargs):
+        param = self.get_argument("param", None)
+        if param is not None:
+            if param == "category":
+                search_content = self.get_argument("search_content")
+                result = get_content_related_to_category(search_content)
+                self.write(json.dumps(result))
 
 
 class Application(tornado.web.Application):
@@ -284,7 +336,8 @@ class Application(tornado.web.Application):
             (r"/add_article", AddArticleHandler),
             (r"/business", BusinessHandler),
             (r"/upload_doc", UploadDocHandler),
-            (r"/open_file", OpenFileHandler)
+            (r"/open_file", OpenFileHandler),
+            (r"/search", SearchHandler)
         ]
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),

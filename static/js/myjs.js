@@ -460,8 +460,8 @@ function businessReady() {
     console.log("businessBody");
 
     $("#businessSearchBtn").click(function () {
-        $("#businessContentMainContainer").find(">div").css("display", "none");
-        $("#searchResultContainer").css("display", "block");
+        var wait_to_search_content = $("#businessSearchContent").val();
+        businessSearchCategory(wait_to_search_content)
     });
 
 
@@ -510,6 +510,51 @@ function businessReady() {
     x.send();
 }
 
+function businessSearchCategory(wait_to_search_content) {
+    $("#businessContentMainContainer").find(">div").css("display", "none");
+    $("#businessSearchResultContainer").css("display", "block");
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function () {
+        if (x.readyState === 4 && x.status === 200) {
+            var results = eval("(" + x.responseText + ")");
+            var result_list = $("#businessSearchResultList");
+            result_list.empty();
+            for (var r in results) {
+                result_list.append(`<li class="list-group-item"><a class='file-open' data-toggle='modal' data-target='#fileContentModal'>${results[r].corpus_file_name}</a><span class="pull-right label label-info">${results[r].business_name}</span></li>`);
+            }
+            //为文件路径添加点击打开文件响应事件
+            $(".file-open").unbind("click").click(function () {
+                openFileViaAJAX($(this).text());
+            });
+        }
+    };
+    x.open("GET", "/search?param=category&search_content=" + wait_to_search_content, true);
+    x.send();
+}
+
+
+function openFileViaAJAX(file_name) {
+    var x = new XMLHttpRequest();
+    console.log("openFileViaAJAX file_name = " + file_name);
+    x.onreadystatechange = function () {
+        if (x.readyState === 4 && x.status === 200) {
+            console.log("$(\".file-open\").click");
+            // console.log(x.responseText);
+            $("#modalFileContent").empty();
+            var file_content = eval("(" + x.responseText + ")");
+            for (var line in file_content) {
+                var p = document.createElement("p");
+                p.textContent += file_content[line];
+                $("#modalFileContent").append(p);
+            }
+
+        }
+    };
+    x.open("GET", "open_file?file_name=" + file_name, true);
+    x.send();
+}
+
+
 //加载子业务信息
 function getSubServiceInfo(pInfo) {
     $("#businessContentMainContainer").find(">div").css("display", "none");
@@ -550,23 +595,11 @@ function getSubServiceInfo(pInfo) {
                 }
                 //为文件路径添加点击打开文件响应事件
                 $(".file-open").unbind("click").click(function () {
-                    var x = new XMLHttpRequest();
-                    x.onreadystatechange = function () {
-                        if (x.readyState === 4 && x.status === 200) {
-                            console.log("$(\".file-open\").click");
-                            console.log(x.responseText);
+                    openFileViaAJAX($(this).text());
+                });
 
-                            var file_content = eval("(" + x.responseText + ")");
-                            for (var line in file_content) {
-                                var p = document.createElement("p");
-                                p.textContent += file_content[line];
-                                $("#modalFileContent").append(p);
-                            }
-
-                        }
-                    };
-                    x.open("GET", "open_file?file_name=" + $(this).text(), true);
-                    x.send();
+                $(".category-open").unbind("click").click(function () {
+                    businessSearchCategory($(this).text())
                 });
             }
         }
