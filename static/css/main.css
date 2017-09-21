@@ -255,3 +255,7 @@ body .navbar {
 #addArticleBodyContainer {
     padding: 30px 80px 30px 80px;
 }
+
+#businessSearchBar {
+    margin-bottom: 20px;
+}
