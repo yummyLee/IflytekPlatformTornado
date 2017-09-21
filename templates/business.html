@@ -11,7 +11,7 @@
     <script src="{{static_url('js/bootstrap.js')}}"></script>
     <script src="{{static_url('js/myjs.js')}}"></script>
 </head>
-<body id="businessBody" >
+<body id="businessBody">
 
 <div>
     <div class="container-fluid">
@@ -63,103 +63,152 @@
 
             <div class="col-lg-9">
 
-                <div class="business-content well clearfix">
+                <div class="row" id="businessSearchBar">
 
-                    <div id="subServiceDetail">
-                        <h2 id="bSubName" class="text-center">subServiceName</h2>
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th class="col-lg-3 text-center">Class</th>
-                                <th class="col-lg-9 text-center">Description</th>
-                            </tr>
-                            </thead>
-                            <tbody id="subServiceTableBody">
-                            <!--<tr>-->
-                            <!--<td class="col-lg-4 text-center">Class</td>-->
-                            <!--<td class="col-lg-8 text-center">Description</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                            <!--<td class="col-lg-4 text-center">Class</td>-->
-                            <!--<td class="col-lg-8 text-center">Description</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                            <!--<td class="col-lg-4 text-center">Class</td>-->
-                            <!--<td class="col-lg-8 text-center">Description</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                            <!--<td class="col-lg-4 text-center">Class</td>-->
-                            <!--<td class="col-lg-8 text-center">Description</td>-->
-                            <!--</tr>-->
-                            </tbody>
-                        </table>
-                    </div>
+                    <form class="form-inline col-sm-12 col-md-12 col-lg-12">
+                        <input id="businessSearchContent" type="search"
+                               class="form-control col-sm-11 col-md-11 col-lg-11" placeholder="需要搜索的内容…">
+                        <button id="businessSearchBtn" type="button" class="btn btn-info col-sm-1 col-md-1 col-lg-1">
+                            搜索
+                        </button>
+                    </form>
 
-                    <div id="subServiceContainer" style="display: none">
-                        <h2 class="text-center">子业务</h2>
-
-                        <div class="panel-group">
-                            <div class="col-lg-4 subservice">
-                                <a href="#" class="a-black">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">子业务1</div>
-                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-4 subservice">
-                                <a href="#" class="a-black">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">子业务1</div>
-                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-4 subservice">
-                                <a href="#" class="a-black">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">子业务1</div>
-                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-4 subservice">
-                                <a href="#" class="a-black">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">子业务1</div>
-                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-4 subservice">
-                                <a href="#" class="a-black">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">子业务1</div>
-                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-4 subservice">
-                                <a href="#" class="a-black">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">子业务1</div>
-                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-4 subservice">
-                                <a href="#" class="a-black">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">子业务1</div>
-                                        <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
 
+                <div id="businessContentMainContainer">
+                    <div id="subServiceDetailContainer" class="business-content well clearfix row"
+                         style="display: none">
+
+                        <div id="subServiceLMDetail">
+                            <h2 id="bSubName" class="text-center">subServiceName</h2>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="col-lg-3 text-center">Class</th>
+                                    <th class="col-lg-9 text-center">Description</th>
+                                </tr>
+                                </thead>
+                                <tbody id="subServiceTableBody">
+                                <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td class="col-lg-4 text-center">Class</td>-->
+                                <!--<td class="col-lg-8 text-center">Description</td>-->
+                                <!--</tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="fileContentModal" role="dialog">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">文件预览</h4>
+                                    </div>
+                                    <div id="modalFileContent" class="modal-body">
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="subServiceContainer" style="display: none">
+                            <h2 class="text-center">子业务</h2>
+
+                            <div class="panel-group">
+                                <div class="col-lg-4 subservice">
+                                    <a href="#" class="a-black">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">子业务1</div>
+                                            <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 subservice">
+                                    <a href="#" class="a-black">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">子业务1</div>
+                                            <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 subservice">
+                                    <a href="#" class="a-black">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">子业务1</div>
+                                            <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 subservice">
+                                    <a href="#" class="a-black">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">子业务1</div>
+                                            <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 subservice">
+                                    <a href="#" class="a-black">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">子业务1</div>
+                                            <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 subservice">
+                                    <a href="#" class="a-black">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">子业务1</div>
+                                            <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 subservice">
+                                    <a href="#" class="a-black">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">子业务1</div>
+                                            <div class="panel-body">子业务描述，子业务描述，子业务描述，子业务描述，</div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div id="searchResultContainer" style="display: none">
+
+                        <ul class="list-group">
+
+                            <li class="list-group-item">ddas<span class="pull-right label label-info">dsa</span><span
+                                    class="pull-right label label-info">dsa</span></li>
+                            <li class="list-group-item">ddas<span class="pull-right label label-info">dsa</span></li>
+                            <li class="list-group-item">ddas<span class="pull-right label label-info">dsa</span></li>
+
+                        </ul>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

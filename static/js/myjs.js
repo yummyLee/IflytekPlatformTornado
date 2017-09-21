@@ -458,6 +458,13 @@ function addArticleReady() {
 //业务页面加载左边菜单树
 function businessReady() {
     console.log("businessBody");
+
+    $("#businessSearchBtn").click(function () {
+        $("#businessContentMainContainer").find(">div").css("display", "none");
+        $("#searchResultContainer").css("display", "block");
+    });
+
+
     var x = new XMLHttpRequest();
     x.onreadystatechange = function () {
         if (x.readyState === 4 && x.status === 200) {
@@ -479,7 +486,7 @@ function businessReady() {
                 );
                 var sub = businesses[i].subservices;
                 for (var j in sub) {
-                    console.log(j);
+                    // console.log(j);
                     $("#collapse" + i).append(`<li class="list-group-item"><div id="sub-models-${i}-${j}" class="panel" data-toggle="collapse" href=""><div class="panel-heading">${sub[j].subServiceName}</div></div></li>`);
                     var html = "";
                     html += "<div class='panel-body'>";
@@ -505,6 +512,8 @@ function businessReady() {
 
 //加载子业务信息
 function getSubServiceInfo(pInfo) {
+    $("#businessContentMainContainer").find(">div").css("display", "none");
+    $("#subServiceDetailContainer").css("display", "block");
     var x = new XMLHttpRequest();
     var info = pInfo.split("\\");
     x.onreadystatechange = function () {
@@ -522,7 +531,11 @@ function getSubServiceInfo(pInfo) {
                 if (typeof sub_service_info[ii] === "object") {
                     for (var i = 0; i < sub_service_info[ii].length; i++) {
                         var p = sub_service_info[ii][i];
-                        ii_content += (p + "<br>");
+                        if (ii === "useCorpus" || ii === "corpusPlace") {
+                            ii_content += ("<a class='file-open' data-toggle=\"modal\" data-target=\"#fileContentModal\">" + p + "</a><br>");
+                        } else if (ii === "corpus") {
+                            ii_content += ("<a class='category-open'>" + p + "</a><br>");
+                        }
                     }
                 } else {
                     ii_content = sub_service_info[ii];
@@ -531,10 +544,30 @@ function getSubServiceInfo(pInfo) {
                 if (ii !== "_id") {
                     $("#subServiceTableBody").append(
                         `<tr>
-                        <td class="col-lg-3 text-center"><span class="label label-info">${ii}</span></td>
-                        <td class="col-lg-9 text-center">${ii_content}</td>
-                    </tr>`)
+                            <td class="col-lg-3 text-center"><span class="label label-info">${ii}</span></td>
+                            <td class="col-lg-9 text-center">${ii_content}</td>
+                        </tr>`);
                 }
+                //为文件路径添加点击打开文件响应事件
+                $(".file-open").unbind("click").click(function () {
+                    var x = new XMLHttpRequest();
+                    x.onreadystatechange = function () {
+                        if (x.readyState === 4 && x.status === 200) {
+                            console.log("$(\".file-open\").click");
+                            console.log(x.responseText);
+
+                            var file_content = eval("(" + x.responseText + ")");
+                            for (var line in file_content) {
+                                var p = document.createElement("p");
+                                p.textContent += file_content[line];
+                                $("#modalFileContent").append(p);
+                            }
+
+                        }
+                    };
+                    x.open("GET", "open_file?file_name=" + $(this).text(), true);
+                    x.send();
+                });
             }
         }
     };
