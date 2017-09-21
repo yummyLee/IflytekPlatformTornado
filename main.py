@@ -13,7 +13,7 @@ from bson import ObjectId
 from pymongo import MongoClient
 from tornado.options import define, options
 
-define("port", default=8009, help="run on the given port", type=int)
+define("port", default=8010, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
@@ -253,6 +253,26 @@ class UploadDocHandler(BaseHandler):
             self.render("upload_doc.html", user=self.current_user)
 
 
+def read_big_file(file_name):
+    file_object = open(file_name, 'rb')
+
+    file_content = []
+    for i in range(20):
+        chunk_data = file_object.readline()
+        file_content.append(str(chunk_data, encoding="utf-8"))
+    return file_content
+
+
+class OpenFileHandler(tornado.web.RequestHandler):
+    def data_received(self, chunk):
+        pass
+
+    def get(self, *args, **kwargs):
+        file_name = self.get_argument("file_name", None)
+        if file_name is not None:
+            self.write(json.dumps(read_big_file(file_name)))
+
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -263,7 +283,8 @@ class Application(tornado.web.Application):
             (r"/article", ArticleHandler),
             (r"/add_article", AddArticleHandler),
             (r"/business", BusinessHandler),
-            (r"/upload_doc", UploadDocHandler)
+            (r"/upload_doc", UploadDocHandler),
+            (r"/open_file", OpenFileHandler)
         ]
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
