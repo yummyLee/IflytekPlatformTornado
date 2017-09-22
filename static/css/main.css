@@ -259,3 +259,18 @@ body .navbar {
 #businessSearchBar {
     margin-bottom: 20px;
 }
+
+#subServiceDetailContainer{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#businessModalDownloadPath{
+    width: 300px;
+    margin-right: 7px;
+}
+
+#businessModalDownloadBtnLink{
+    text-decoration: none;
+    color: whitesmoke;
+}

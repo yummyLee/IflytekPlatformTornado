@@ -71,9 +71,11 @@
         reader.readAsText(f, 'gb2312');
         document.getElementById('TipsForNoTrust').innerHTML = 'Oops, told you before, nothing to show.'
     }
+
     function openDoc() {
         alert('come on...')
     }
+
     function putDocToDB() {
 
     }
@@ -94,13 +96,16 @@
         * <strong>当前推荐使用在线编辑上传功能</strong> <br/>
         * <br/>
     </h3></p>
-    <p><input type="file" name="local_document" id="folderGetter" style="margin:auto;width:160px"/></p>
-    <input type="button" value="在线预览" onclick="show()" style="margin:auto;width:160px;text-align:center"/>
-    <input type="button" value="点击上传" onclick="openDoc()" style="margin:auto;width:160px"/>
+    <p><input type="file" name="local_document" id="folderGetter" style="margin:auto;width:160px"/>
+    </p>
+    <input class="btn btn-info" type="button" value="在线预览" onclick="show()"
+           style="margin:auto;width:160px;text-align:center"/>
+    <input class="btn btn-info" type="button" value="点击上传" onclick="openDoc()" style="margin:auto;width:160px"/>
     <br/><br/>
     <strong><p id="TipsForNoTrust"></p></strong>
     <br/><br/>
-    <p><a href="/add_article"></href><input type="button" value="点此返回在线编辑" style="margin:auto;width:160px"/></a></p>
+    <p><a href="/add_article"></href><input class="btn btn-info" type="button" value="点此返回在线编辑"
+                                            style="margin:auto;width:160px"/></a></p>
     <p></p>
 </div>
 

@@ -459,11 +459,21 @@ function addArticleReady() {
 function businessReady() {
     console.log("businessBody");
 
-    $("#businessSearchBtn").click(function () {
-        var wait_to_search_content = $("#businessSearchContent").val();
-        businessSearchCategory(wait_to_search_content)
+    $("#businessContainer").keyup(function (event) {
+        if (event.keyCode === 13) {
+            var wait_to_search_content = $("#businessSearchContent").val();
+            businessSearchCategory(wait_to_search_content)
+        }
     });
 
+    $("#businessSearchBtn").click(function () {
+        var wait_to_search_content = $("#businessSearchContent").val();
+        businessSearchCategory(wait_to_search_content);
+    });
+
+    $("#businessModalDownloadBtn").click(function () {
+
+    });
 
     var x = new XMLHttpRequest();
     x.onreadystatechange = function () {
@@ -541,16 +551,21 @@ function openFileViaAJAX(file_name) {
             console.log("$(\".file-open\").click");
             // console.log(x.responseText);
             $("#modalFileContent").empty();
+            $("#businessModalDownloadBtnLink").removeClass("disabled");
             var file_content = eval("(" + x.responseText + ")");
             for (var line in file_content) {
                 var p = document.createElement("p");
-                p.textContent += file_content[line];
+                if (file_content[line] === "Iflytek-Dir-Sign") {
+                    $("#businessModalDownloadBtnLink").addClass("disabled");
+                } else {
+                    p.textContent += file_content[line];
+                }
                 $("#modalFileContent").append(p);
             }
-
+            $("#businessModalDownloadBtnLink").attr("href", "http://localhost:8010/file?param=download&file_name=" + file_name);
         }
     };
-    x.open("GET", "open_file?file_name=" + file_name, true);
+    x.open("GET", "file?param=read&file_name=" + file_name, true);
     x.send();
 }
 

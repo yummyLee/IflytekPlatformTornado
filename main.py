@@ -268,12 +268,29 @@ class OpenFileHandler(tornado.web.RequestHandler):
         pass
 
     def get(self, *args, **kwargs):
-        file_name = self.get_argument("file_name", None)
-        if os.path.isdir(file_name):
-            self.write(json.dumps(os.listdir(file_name)))
-            return
-        if file_name is not None:
-            self.write(json.dumps(read_big_file(file_name)))
+        param = self.get_argument("param", None)
+        if param is not None:
+            if param == "read":
+                file_name = self.get_argument("file_name", None)
+                if os.path.isdir(file_name):
+                    file_list = os.listdir(file_name)
+                    file_list.append("Iflytek-Dir-Sign")
+                    self.write(json.dumps(file_list))
+                    return
+                if file_name is not None:
+                    self.write(json.dumps(read_big_file(file_name)))
+            elif param == "download":
+                file_name = self.get_argument("file_name", None)
+                self.set_header('Content-Type', 'application/octet-stream')
+                self.set_header('Content-Disposition', 'attachment; filename=' + file_name)
+                buf_size = 4096
+                with open(file_name, 'rb') as f:
+                    while True:
+                        data = f.read(buf_size)
+                        if not data:
+                            break
+                        self.write(data)
+                self.finish()
 
 
 def is_lists_inter(list1, list2):
@@ -336,7 +353,7 @@ class Application(tornado.web.Application):
             (r"/add_article", AddArticleHandler),
             (r"/business", BusinessHandler),
             (r"/upload_doc", UploadDocHandler),
-            (r"/open_file", OpenFileHandler),
+            (r"/file", OpenFileHandler),
             (r"/search", SearchHandler)
         ]
         settings = dict(
