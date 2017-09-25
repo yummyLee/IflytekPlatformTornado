@@ -235,24 +235,9 @@ $("#contentContainer").ready(function () {
     var params = window.location.search;
     console.log("$(\"#contentContainer\").ready");
     console.log("path = " + path);
+    console.log("params = " + params);
     loadContainerPages(path.replace("/", ""), params.replace("?", ""));
 
-    // $("#addArticleLink").click(function () {
-    //     var x = new XMLHttpRequest();
-    //     x.overrideMimeType("text/html");
-    //     x.onreadystatechange = function () {
-    //         if (x.readyState === 4 && x.status === 200) {
-    //             // console.log(x.responseText);
-    //             var html = new DOMParser().parseFromString(x.responseText, "text/html").getElementById("addArticleBodyContainer");
-    //             console.log(html);
-    //             $("#contentContainer").html(html.outerHTML);
-    //             addArticleReady();
-    //             window.history.replaceState("", "", "/add_article");
-    //         }
-    //     };
-    //     x.open("GET", "add_article", true);
-    //     x.send();
-    // });
 });
 
 
@@ -475,6 +460,19 @@ function businessReady() {
 
     });
 
+    $("#businessModalLastPage").click(function () {
+        if (currentBusinessFileContentLineNumOffset - businessContentReadLineLimit >= 0) {
+            currentBusinessFileContentLineNumOffset -= businessContentReadLineLimit;
+            openFileViaAJAX(currentBusinessFileName, currentBusinessFileContentLineNumOffset)
+        }
+    });
+
+    $("#businessModalNextPage").click(function () {
+        currentBusinessFileContentLineNumOffset += businessContentReadLineLimit;
+        openFileViaAJAX(currentBusinessFileName, currentBusinessFileContentLineNumOffset)
+    });
+
+
     var x = new XMLHttpRequest();
     x.onreadystatechange = function () {
         if (x.readyState === 4 && x.status === 200) {
@@ -534,7 +532,10 @@ function businessSearchCategory(wait_to_search_content) {
             }
             //为文件路径添加点击打开文件响应事件
             $(".file-open").unbind("click").click(function () {
-                openFileViaAJAX($(this).text());
+                currentBusinessFileContentLineNumOffset = 0;
+                currentBusinessFileName = $(this).text();
+                openFileViaAJAX(currentBusinessFileName, currentBusinessFileContentLineNumOffset);
+
             });
         }
     };
@@ -542,8 +543,11 @@ function businessSearchCategory(wait_to_search_content) {
     x.send();
 }
 
+var currentBusinessFileContentLineNumOffset;
+var currentBusinessFileName;
+var businessContentReadLineLimit = 15;
 
-function openFileViaAJAX(file_name) {
+function openFileViaAJAX(file_name, offset) {
     var x = new XMLHttpRequest();
     console.log("openFileViaAJAX file_name = " + file_name);
     x.onreadystatechange = function () {
@@ -565,7 +569,7 @@ function openFileViaAJAX(file_name) {
             $("#businessModalDownloadBtnLink").attr("href", "http://localhost:8010/file?param=download&file_name=" + file_name);
         }
     };
-    x.open("GET", "file?param=read&file_name=" + file_name, true);
+    x.open("GET", "file?param=read&file_name=" + file_name + "&offset=" + offset + "&limit=" + businessContentReadLineLimit, true);
     x.send();
 }
 
@@ -610,7 +614,9 @@ function getSubServiceInfo(pInfo) {
                 }
                 //为文件路径添加点击打开文件响应事件
                 $(".file-open").unbind("click").click(function () {
-                    openFileViaAJAX($(this).text());
+                    currentBusinessFileContentLineNumOffset = 0;
+                    currentBusinessFileName = $(this).text();
+                    openFileViaAJAX(currentBusinessFileName, currentBusinessFileContentLineNumOffset);
                 });
 
                 $(".category-open").unbind("click").click(function () {

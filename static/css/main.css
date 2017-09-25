@@ -260,17 +260,22 @@ body .navbar {
     margin-bottom: 20px;
 }
 
-#subServiceDetailContainer{
+#subServiceDetailContainer {
     margin-left: 0;
     margin-right: 0;
 }
 
-#businessModalDownloadPath{
+#businessModalDownloadPath {
     width: 300px;
     margin-right: 7px;
 }
 
-#businessModalDownloadBtnLink{
+#businessModalDownloadBtnLink {
     text-decoration: none;
     color: whitesmoke;
+}
+
+#fileContentModalFooter {
+    /*margin-right: 5px;*/
+    /*margin-left: 5px;*/
 }

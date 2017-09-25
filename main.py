@@ -1,3 +1,4 @@
+import linecache
 import os.path
 import tornado.escape
 import tornado.httpserver
@@ -253,14 +254,31 @@ class UploadDocHandler(BaseHandler):
             self.render("upload_doc.html", user=self.current_user)
 
 
-def read_big_file(file_name):
-    file_object = open(file_name, 'rb')
-
+def read_file(file_name, offset, limit):
+    # file_object = open(file_name, 'r', encoding='utf-8')
     file_content = []
-    for i in range(20):
-        chunk_data = file_object.readline()
-        file_content.append(str(chunk_data, encoding="utf-8"))
+    offset = int(offset)
+    limit = int(limit)
+    count = 0
+    with open(file_name, "r", encoding="utf-8")as f:
+        for chunk_data in f:
+            count += 1
+            if offset <= count < offset + limit:
+                print(count)
+                file_content.append(chunk_data)
+            if count >= offset + limit:
+                break
     return file_content
+
+
+def read_big_file(file_name):
+    buf_size = 4096
+    with open(file_name, 'r', encoding='utf-8') as f:
+        while True:
+            data = f.read(buf_size)
+            if not data:
+                break
+            yield data
 
 
 class OpenFileHandler(tornado.web.RequestHandler):
@@ -278,18 +296,16 @@ class OpenFileHandler(tornado.web.RequestHandler):
                     self.write(json.dumps(file_list))
                     return
                 if file_name is not None:
-                    self.write(json.dumps(read_big_file(file_name)))
+                    offset = self.get_argument("offset", None)
+                    limit = self.get_argument("limit", None)
+                    self.write(json.dumps(read_file(file_name, offset, limit)))
             elif param == "download":
                 file_name = self.get_argument("file_name", None)
                 self.set_header('Content-Type', 'application/octet-stream')
                 self.set_header('Content-Disposition', 'attachment; filename=' + file_name)
-                buf_size = 4096
-                with open(file_name, 'rb') as f:
-                    while True:
-                        data = f.read(buf_size)
-                        if not data:
-                            break
-                        self.write(data)
+
+                for data in read_big_file(file_name):
+                    self.write(data)
                 self.finish()
 
 
@@ -317,15 +333,25 @@ def get_content_related_to_category(search_content):
                     if "useCorpus" in r:
                         for use in r["useCorpus"]:
                             if use not in file_set:
-                                file_list.append({"corpus_file_name": use, "business_name": business})
-                                file_set.add(use)
+                                is_related = False
+                                for k in keywords:
+                                    if use.__contains__(k):
+                                        is_related = True
+                                if is_related:
+                                    file_list.append({"corpus_file_name": use, "business_name": business})
+                                    file_set.add(use)
                     else:
                         for m_dir in r["corpusPlace"]:
                             dir_file_list = os.listdir(m_dir)
                             for dir_file in dir_file_list:
-                                if use not in file_set:
-                                    file_list.append({"corpus_file_name": dir_file, "business_name": business})
-                                    file_set.add(use)
+                                if dir_file not in file_set:
+                                    is_related = False
+                                    for k in keywords:
+                                        if dir_file.__contains__(k):
+                                            is_related = True
+                                    if is_related:
+                                        file_list.append({"corpus_file_name": dir_file, "business_name": business})
+                                        file_set.add(dir_file)
     return file_list
 
 
