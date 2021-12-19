@@ -18,7 +18,7 @@ define("port", default=8010, help="run on the given port", type=int)
 
 MONGODB_DB_URL = os.environ.get('OPENSHIFT_MONGODB_DB_URL') if os.environ.get(
     'OPENSHIFT_MONGODB_DB_URL') else 'mongodb://localhost:27017/'
-MONGODB_DB_NAME = os.environ.get('OPENSHIFT_APP_NAME') if os.environ.get('OPENSHIFT_APP_NAME') else 'iflytek'
+MONGODB_DB_NAME = os.environ.get('OPENSHIFT_APP_NAME') if os.environ.get('OPENSHIFT_APP_NAME') else 'yummy_zone'
 
 client = MongoClient(MONGODB_DB_URL)
 db = client[MONGODB_DB_NAME]
