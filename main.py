@@ -45,6 +45,9 @@ class LoginHandler(BaseHandler):
         password = self.get_argument("password")
         print("got post, " + username + ", " + password)
         result = db.user.find_one({"username": username, "password": password})
+        result_test = db.user.find_one()
+        if result_test is not None:
+            print(result_test)
         if result is not None:
             self.set_secure_cookie("username", username)
             self.write(json.dumps({
