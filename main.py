@@ -48,6 +48,8 @@ class LoginHandler(BaseHandler):
         result_test = db.user.find_one()
         if result_test is not None:
             print(result_test)
+        else:
+            print("empty")
         if result is not None:
             self.set_secure_cookie("username", username)
             self.write(json.dumps({
